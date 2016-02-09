@@ -2,6 +2,12 @@ package it.unibo.oop.controller;
 
 import it.unibo.oop.view.Launcher;
 
+/**
+ * 
+ * @author Paolo
+ *
+ *  class 
+ */
 public class GameLoop {
 
     private final Launcher launcher;
@@ -11,6 +17,9 @@ public class GameLoop {
 
     }
     
+    /**
+     * 
+     */
     public GameLoop() {
         this.launcher = new Launcher(this);
         
@@ -25,8 +34,8 @@ public class GameLoop {
         
     }
     
-    public void keySwitcher(final int id) {
-        switch (id) {
+    public void keySwitcher(final char c) {
+        switch (c) {
         case 'w':
             System.out.println("mosso in alto");
             break;

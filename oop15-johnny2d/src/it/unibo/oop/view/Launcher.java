@@ -76,15 +76,13 @@ public class Launcher extends JFrame {
 				System.exit(0);
 			}
 		});
-		
-		/* per keylistener */
-		this.addKeyListener(new MainKeyListener(this.gL));
-		
-		this.setFocusTraversalKeysEnabled(false);
-		
+	
 		this.setContentPane(menuPanel);
 		this.setVisible(true);
-		
+	
+		/* per keylistener: solo prova, non centra col Launcher, sono da mettere nella view di gioco */
+        this.addKeyListener(new MainKeyListener(this.gL));
+        this.setFocusTraversalKeysEnabled(false);
 		this.requestFocus(); /* per attivare il key listener */
 	}
 	

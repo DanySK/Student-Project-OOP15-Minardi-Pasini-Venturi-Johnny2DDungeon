@@ -5,34 +5,41 @@ import java.awt.event.KeyListener;
 
 import it.unibo.oop.controller.GameLoop;
 
+/**
+ * 
+ * @author Paolo
+ * 
+ * simple custom class implementing {@link KeyListener} should be attached to the main view (where to play the game).
+ *
+ */
 public class MainKeyListener implements KeyListener {
 
     private final GameLoop gL;
     
+    /**
+     * 
+     * @param gL
+     *          a {@link GameLoop} instance
+     * 
+     */
     public MainKeyListener(final GameLoop gL) {
         this.gL = gL;
     }
     
     @Override
     public void keyPressed(KeyEvent e) {
-//        final int id = e.getID();
-//        System.out.println("ciao");
-//        if (id == KeyEvent.KEY_TYPED) {
-//            System.out.println(e.getKeyChar());
-//        }
+
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-//        // TODO Auto-generated method stub
-//        System.out.println(e.getKeyChar());
+
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        new Thread(() -> {
-           // System.out.println(e.getKeyChar());
+      //  new Thread(() -> {
             this.gL.keySwitcher(e.getKeyChar());
-        });   
+      //  });   
     }
 }
