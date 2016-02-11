@@ -12,7 +12,7 @@ public class SpriteSheet {
 	
 	private BufferedImage sheet;
 	private List<BufferedImage> sprites;
-	private ImageLoader loader;
+	private final ImageLoader loader;
 	private boolean isSplitted = false;
 	
 	/**
@@ -21,13 +21,13 @@ public class SpriteSheet {
 	 * 		the name of the sprite sheet
 	 */
 	public SpriteSheet(String sheetName) {
-		loader = new ImageLoader();
+		this.loader = new ImageLoader();
 		try {
-			sheet = loader.load(sheetName);
+			this.sheet = this.loader.load(sheetName);
 		} catch (IOException e) {
 			System.out.println("Sheet not found");
 		}
-		sprites = new LinkedList<>();
+		this.sprites = new LinkedList<>();
 	}
 	
 	private BufferedImage grabSprite(int x, int y, int width, int height) {
@@ -35,7 +35,8 @@ public class SpriteSheet {
 	}
 	
 	/**
-	 * Splits every sprite in the sprite sheet.
+	 * Splits every sprite in the sprite sheet. It considers only the
+	 * first sprite for every row in the sheet (only one animation).
 	 * @param imagesWidth
 	 * 		the width of each sprite in the sprite sheet
 	 * @param imagesHeight
@@ -45,15 +46,11 @@ public class SpriteSheet {
 	 */
 	public List<BufferedImage> split(int imagesWidth, int imagesHeight) {
 		sprites = new LinkedList<>();
-		if ((sheet.getHeight() % imagesHeight == 0) && (sheet.getWidth() % imagesWidth == 0)) {
-			isSplitted = true;
-		} else {
-			isSplitted = false;
-		}
+		isSplitted = ((sheet.getHeight() % imagesHeight == 0) &&
+				(sheet.getWidth() % imagesWidth == 0)) ? true : false;
 		if ((sheet != null) && isSplitted) {
-			isSplitted = true;
 			for (int y = 0; y < sheet.getHeight(); y += imagesHeight) {
-				for(int x = 0; x < sheet.getWidth(); x += imagesWidth) {
+				for(int x = 0; x < imagesWidth; x += imagesWidth) {
 					sprites.add(grabSprite(x, y, imagesWidth, imagesHeight));
 				}
 			}
@@ -70,8 +67,8 @@ public class SpriteSheet {
 	 * @throws IndexOutOfBoundsException
 	 * 		if the index is invalid
 	 */
-	public BufferedImage getSprite(int i) throws IndexOutOfBoundsException{
-		if ((i >= sprites.size()) && isSplitted){
+	public BufferedImage getSprite(int i) throws IndexOutOfBoundsException {
+		if ((i >= sprites.size()) && isSplitted) {
 			throw new IndexOutOfBoundsException();
 		}
 		return sprites.get(i);
