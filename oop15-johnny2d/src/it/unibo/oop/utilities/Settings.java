@@ -10,8 +10,7 @@ import java.awt.Toolkit;
  */
 public final class Settings {
 	
-	private Settings() {};
-	
+	private Settings() {};	
 	/**
 	 * Home directory.
 	 */

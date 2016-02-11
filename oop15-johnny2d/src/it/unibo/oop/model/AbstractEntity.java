@@ -11,6 +11,14 @@ public abstract class AbstractEntity implements Entity {
 		return this.envPosition;
 	}
 	
+	public int getX(){
+		return envPosition.getX();
+	}
+	
+	public int getY(){
+		return envPosition.getY();
+	}
+	
 	public boolean isHere(Position newPosition){
 		return envPosition.equals(newPosition);		
 	}
