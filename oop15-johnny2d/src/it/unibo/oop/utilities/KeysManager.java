@@ -1,11 +1,11 @@
 package it.unibo.oop.utilities;
 
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
-import static it.unibo.oop.controller.KeyCommands.*;
 import it.unibo.oop.controller.KeyCommands;
 import it.unibo.oop.controller.KeyboardObserver;
 
@@ -17,79 +17,95 @@ import it.unibo.oop.controller.KeyboardObserver;
  */
 public class KeysManager<T> implements KeyboardObserver {
 
-    private final List<Integer> keysPressed; /* svuotata da KeyRelease event */
-    private List<Character> keysTyped; /* svuotata ad ogni frame */
+    private static final int NO_COMMANDS = KeyCommands.class.getEnumConstants().length; 
+    private final List<KeyCommands> keysPressed; /* elementi rimossi da KeyRelease event: indica tasti premuti PROLUNGATAMENTE */
+    private List<KeyCommands> keysTyped;         /* svuotata ad ogni frame: indica tasti premuti NON prolungatamente*/
+    private final Map<Integer, KeyCommands> mapVKCodeToKeyCmd;
     
     public KeysManager() {
         this.keysPressed = new ArrayList<>();
-        this.keysTyped = new ArrayList<>(); /*lista perché più tasti alla volta potrebbero essere typed p.e. M tasti direzione e 1 spara */
+        this.keysTyped = new ArrayList<>();     /*lista perché più tasti alla volta potrebbero essere typed p.e. M tasti direzione e 1 spara */
+        this.mapVKCodeToKeyCmd = new HashMap<>(NO_COMMANDS);
+        for (final KeyCommands cmd: KeyCommands.class.getEnumConstants()) {
+            this.mapVKCodeToKeyCmd.put(cmd.getVkCode(), cmd);
+        }
     }
     
-    /* NB: massimo vengono considerati 2 tasti di direzione priorità a quelli pressed */
-    public synchronized Direction getDirection() {
+    /*
+     * FUNZIONAMENTO:   
+     * Scorro la lista keysPressed e cerco i primi due tasti di direzione; gli eventuali "posti liberi" vengono riemipi
+     * da max 2 tasti di direzione presi dalla keysTyped.
+     * NOTE: 
+     * Al massimo vengono considerati 2 tasti di direzione; i Pressed hanno priorità maggiore di quelli Typed;
+     * eventuali altri tasti vengono ignorati per il frame da disegnare;
+     * dir1 e dir2 (i due campo della classe Pair in questo caso) servono per formare 8 direzioni nello spazio: 
+     * nel fare ciò non possono essere associare a dir1 e dir2 la stessa direzione (possono però essere associare
+     * direzioni opposte).
+     * 
+     */
+    /* eventualmente parametizzare Pair */
+    public synchronized Pair<Direction, Direction> getDirection() {
+        final Pair<Direction, Direction> out = new Pair<>(Direction.NONE, Direction.NONE);      
         
-        /* scorro la lista keysPressed e cerco i primi due tasti non opposti; gli eventuali "posti liberi" vengono riemipi
-         * da max 2 tasti di direzione presi dalla keysTyped
-         *
-         *
-         *prendo i primi 2 di direzione, se sono opposti prendo il primo di direzione
-         *
-         */
-        final List<Integer> list = new ArrayList<>(2);  
-        int i = 0;
-         
-        for (Integer key: this.keysPressed) {
-            if(list.isEmpty() || list.get(0) != key || list.get(0) != list.get(0).) {
-                
-            }
-        }
-        this.keysTyped = new ArrayList<>();
+//        System.out.println("PRESSED: " + this.keysPressed);
+//        System.out.println("TYPED: " + this.keysTyped);
+        
+        this.processOutPair(this.keysPressed, out);
+        this.processOutPair(this.keysTyped, out);
+        this.keysTyped = new ArrayList<>(); /* resetto le keysTyped */
+        
+        return out;
     }
 
-    private static Optional<KeyCommands> getCrossKey() {
-        KeyCommands tmp;
-        switch (key) {
-        case W:
-            tmp = S;
-            break;
-        case S:
-            tmp = W;
-            break;
-        case A:
-            tmp = D;
-            break;
-        case D:
-            tmp = A;
-            break;
-        default:
-            tmp = null;
-        } 
-        return Optional.ofNullable(tmp);
+    private void processOutPair(final List<KeyCommands> inList, final Pair<Direction, Direction> outPair) {
+        for (final KeyCommands key: inList) {
+            if (key.isMovement()) {
+                if (outPair.getX() == Direction.NONE) {
+                    outPair.setX(key.getDir());
+                } else if (outPair.getY() == Direction.NONE && outPair.getX() != key.getDir()) { /* do priorità a dir 2 diverse da dir 1 */
+                    outPair.setY(key.getDir());
+                } else
+                    break;
+            }
+        }
     }
     
-    public synchronized boolean isAKeyPressed(final int VK_Code) {
-        return this.keysPressed.contains(VK_Code) || this.keysTyped.contains(VK_Code);
+    /* per filtrare(da cui l'Optional)/mappare i tasti su i comandi */
+    private Optional<KeyCommands> vk_CodeToKeyCommand(final int vk_Code) { 
+        return Optional.ofNullable(this.mapVKCodeToKeyCmd.get(vk_Code));
+    }
+    
+    public synchronized boolean isAKeyPressed(final KeyCommands cmd) {
+        return this.keysPressed.contains(cmd) || this.keysTyped.contains(cmd);
     }
     
     @Override
     public synchronized void keyPressed(final int keyCode) {
-        if (!this.keysPressed.contains(keyCode)) {
-            this.keysPressed.add(keyCode);
+        final Optional<KeyCommands> cmd = this.vk_CodeToKeyCommand(keyCode);
+        if (cmd.isPresent()) { /* ignoro eventi provenienti da tasti non significativi */
+            if (!this.keysPressed.contains(cmd.get())) {
+                this.keysPressed.add(cmd.get());
+            }
+            if (!this.keysTyped.contains(cmd.get())) {
+                this.keysTyped.add(cmd.get());
+            }
         }
     }
 
     @Override
     public synchronized void keyReleased(final int keyCode) {
-        if (this.keysPressed.contains(keyCode)) {
-            this.keysPressed.remove(keyCode);
+        final Optional<KeyCommands> cmd = this.vk_CodeToKeyCommand(keyCode);
+        if (cmd.isPresent() && this.keysPressed.contains(cmd.get())) {
+            this.keysPressed.remove(cmd.get()); /* rimuovo solo le keys premute a lungo; se era typed rimane in lista finché
+            non viene disegnato il frame */
         }
     }
     
-    @Override
+    @Override /* analogo a keyPressed ma con arg0 un char */
     public synchronized void keyTyped(final char keyChar) {
-        if (this.keysTyped.contains(keyChar)) {
-            this.keysTyped.remove(keyChar);
-        }
+//        final Optional<KeyCommands> cmd = this.vk_CodeToKeyCommand(KeyEvent.getExtendedKeyCodeForChar(keyChar));
+//        if (cmd.isPresent() && !this.keysTyped.contains(cmd.get()) && !this.keysPressed.contains(cmd.get())) {
+//            this.keysTyped.add(cmd.get());
+//        }
     }
-    
 }

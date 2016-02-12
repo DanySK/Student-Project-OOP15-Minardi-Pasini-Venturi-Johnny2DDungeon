@@ -35,7 +35,7 @@ public class MainKeyListener implements KeyListener {
                 elem.keyPressed(e.getKeyCode());
             }).start();
         });
-        System.out.println("pressed");
+      //  System.out.println("-----------------> pressed");
     }
 
     @Override
@@ -45,16 +45,16 @@ public class MainKeyListener implements KeyListener {
                 elem.keyReleased(e.getKeyCode());
             }).start();
         });
-        System.out.println("released");
+  //      System.out.println("released");
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
 //        this.obsList.forEach(elem -> {
 //            new Thread(() -> {
-//                elem.keyTyped(e.getKeyCode());
+//                elem.keyTyped(e.getKeyChar());
 //            }).start();
 //        });
-        System.out.println("pressed");
+//        System.out.println("-----------------> typed");
     }
 }
