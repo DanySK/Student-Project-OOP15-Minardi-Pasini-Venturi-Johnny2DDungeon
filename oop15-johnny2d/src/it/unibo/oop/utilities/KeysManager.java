@@ -61,6 +61,7 @@ public class KeysManager implements KeyboardObserver {
         this.processOutPair(this.keysTyped, out);
         this.keysTyped = new ArrayList<>(); /* resetto le keysTyped */
         
+        Direction.class.getField(out.gg)
         return out;
     }
 
