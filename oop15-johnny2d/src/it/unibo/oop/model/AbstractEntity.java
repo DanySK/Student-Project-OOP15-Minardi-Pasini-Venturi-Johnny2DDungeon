@@ -3,6 +3,7 @@ package it.unibo.oop.model;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Optional;
 import it.unibo.oop.utilities.Position;
 /**
  * This abstract class shapes the standard {@link Entity} of the game. Every entity
@@ -13,10 +14,14 @@ import it.unibo.oop.utilities.Position;
 public abstract class AbstractEntity implements Entity {
 	
 	protected Position entityPosition; 
-	//Optional<GameState> gameEnvironment;
+	private Optional<GameState> gameEnvironment;
+
+	public AbstractEntity(int startingX, int startingY){
+		this.entityPosition = new Position(startingX,startingY);
+	}
 	/**
 	 * Getter of the position of the {@link Entity}
-	 */
+	 */	
 	public Position getPosition() {
 		return this.entityPosition;
 	}
@@ -66,27 +71,30 @@ public abstract class AbstractEntity implements Entity {
 		return this.getBounds().intersects(secondEntity.getBounds());
 	}
 	
-	/*
-	public attachEnvironment(GameState newEnvironment){
-	  this.gameEnvironment = newEnvironment;
+	
+	public void attachEnvironment(GameState newEnvironment){
+	  this.gameEnvironment = Optional.of(newEnvironment);
 	}
 	
-	public removeEnvironment(){
-		this.gameEnvironment = Optional.empty();
-	}
-	
-	public void checkEnvirnment() throws EnvirnmentNotFoundException {
-		if (!this.gameEnvirnment.ifPresent()){
-			throw new EnvirnmentNotFoundException();
+	public void removeEnvironment(){
+		if (this.gameEnvironment.isPresent()){
+			this.gameEnvironment = Optional.empty();
 		}
 	}
 	
+	public boolean hasEnvirnment(){
+		if (this.gameEnvironment.isPresent() ){
+			return true;
+		}
+		return false;
+	}
+	
 	public Optional<GameState> getEnvironment(){
-		return this.gameEnvirnment;
+		return this.gameEnvironment;
 	}
 	 
 	public void removeFromEnvirnment(){
-		gameEnvironment.removeItem(this);
+		gameEnvironment.get().removeEntity(this);
 	}
-	*/
+	
 }
