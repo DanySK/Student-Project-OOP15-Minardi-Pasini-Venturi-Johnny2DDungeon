@@ -5,10 +5,20 @@ import it.unibo.oop.utilities.Vector2;
 import it.unibo.oop.utilities.Velocity;
 
 public abstract class MovableEntity extends AbstractEntity implements Movable {
-	
+
 	protected Vector2 movementVector;
 	protected Velocity speedValues;
-
+	
+	public MovableEntity(int startingX, int startingY, Vector2 movementVector) {
+		super(startingX,startingY);
+		this.movementVector = movementVector;
+	}
+	
+	public MovableEntity(int startingX, int startingY, Vector2 movementVector, Velocity speedValue) {
+		this(startingX,startingY, movementVector);
+		this.speedValues = speedValue;		
+	}		
+	
 	public void move(){
 		this.entityPosition = this.getPosition().sumVector(movementVector); 
 	}
