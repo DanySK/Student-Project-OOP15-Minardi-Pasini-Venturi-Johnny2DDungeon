@@ -24,20 +24,16 @@ public abstract class MovableEntity extends AbstractEntity implements Movable {
 		this.entityPosition = this.getPosition().sumVector(movementVector); 
 	}
 	
-	public void setInput(Vector2 newMovement){
+	public void setMovement(Vector2 newMovement){
 		this.movementVector = newMovement;
+	}
+	
+	public Vector2 getMovement(){
+		return this.movementVector;
 	}
 	
 	public abstract void checkCollision(Position newPosition) throws CollisionHandlingException;
 	
-	public void setDirection(Vector2 newMovement){
-		this.movementVector = newMovement;
-	}
-	
-	public Vector2 getDirection(){
-		return this.movementVector;
-	}
-		
 	public Velocity getVelocity(){
 		return this.speedValues;
 	}

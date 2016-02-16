@@ -33,6 +33,15 @@ public class GameStateImpl implements GameState {
 
     @Override
     public void updatePositions() {
+    	for (MovableEntity currentE : movableList){
+    		if (currentE instanceof Bullet){
+    			((Bullet) currentE).update();
+    		}
+    		if (currentE instanceof Enemy){
+    			((Bullet) currentE).update();
+    		}
+    	}
+    	//this.updateHeroPos(newDirection, isShooting);
     }
 
     public void updateHeroPos(final Direction newDirection, final boolean isShooting ) {
@@ -41,6 +50,14 @@ public class GameStateImpl implements GameState {
 
 	public void addShoot(Bullet newBullet) {
 		this.movableList.add(newBullet);
+	}
+	
+	public void addMovableEntity(MovableEntity newEntity){
+		this.movableList.add(newEntity);
+	}
+	
+	public void addStableEntity(AbstractEntity newEntity){
+		this.stableList.add(newEntity);
 	}
 
 	public List<AbstractEntity> getStableList() {

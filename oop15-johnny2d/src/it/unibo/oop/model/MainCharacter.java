@@ -32,7 +32,7 @@ public class MainCharacter extends MovableEntity implements Shooter{
 	}
 	
 	public void update(Direction newDirection , boolean isShooting){
-		this.setInput(newDirection.getVector2());
+		this.setMovement(newDirection.getVector2());
 		this.move();
 		if (isShooting){
 			this.shoot();
@@ -92,6 +92,7 @@ public class MainCharacter extends MovableEntity implements Shooter{
 		}	
 	}
 
+	
 	protected int getEntityHeight() {
 		return MAIN_CHARACTER.getHeight();
 	}

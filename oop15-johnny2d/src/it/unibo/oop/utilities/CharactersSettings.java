@@ -4,7 +4,8 @@ public enum CharactersSettings {
 	MAIN_CHARACTER(32,32,new Velocity(30,100, 10)),
 	BASIC_ENEMY(32,32,new Velocity(30,100, 10)),
 	BULLET(32,32,new Velocity(30,100, 10)),
-	BONUS(32,32,null);
+	BONUS(32,32,null),
+	WALL(32,32,null);
 	
 	int width;
 	int height;
