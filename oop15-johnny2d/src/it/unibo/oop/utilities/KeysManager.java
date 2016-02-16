@@ -43,6 +43,10 @@ public class KeysManager implements KeyboardObserver {
         this.keysTyped = new ArrayList<>(); /*lista perché più tasti alla volta potrebbero essere typed p.e. M tasti direzione e 1 spara */
     }
 
+    public synchronized boolean isAKeyPressed(final KeyCommands cmd) {
+        return this.keysPressed.contains(cmd) || this.keysTyped.contains(cmd);
+    }
+    
     /*
      * FUNZIONAMENTO:   
      * Scorro la lista keysPressed e cerco i primi due tasti di direzione; gli eventuali "posti liberi" vengono riemipi
@@ -59,13 +63,9 @@ public class KeysManager implements KeyboardObserver {
     public synchronized Direction getDirection() {
         final List<KeyCommands> tmpList = new ArrayList<>();      
         KeyCommands out = NONE;
-
-        //        System.out.println("PRESSED: " + this.keysPressed);
-        //        System.out.println("TYPED: " + this.keysTyped);
-
+        
         this.processKeys(this.keysPressed, tmpList);
         this.processKeys(this.keysTyped, tmpList);
-
         switch (tmpList.size()) {
         case 1:
             out = tmpList.get(0);
@@ -89,9 +89,8 @@ public class KeysManager implements KeyboardObserver {
             }
             break;
         }
-
         this.keysTyped = new ArrayList<>(); /* resetto le keysTyped */
-        // System.out.println("esc pressed: " + this.isAKeyPressed(ESC));
+        
         return out.getDir();
     }
 
@@ -107,16 +106,7 @@ public class KeysManager implements KeyboardObserver {
             }
         }
     }
-
-    /* per filtrare(da cui l'Optional)/mappare i tasti su i comandi */
-    private Optional<KeyCommands> vk_CodeToKeyCommand(final int vk_Code) { 
-        return Optional.ofNullable(this.mapVKCodeToKeyCmd.get(vk_Code));
-    }
-
-    public synchronized boolean isAKeyPressed(final KeyCommands cmd) {
-        return this.keysPressed.contains(cmd) || this.keysTyped.contains(cmd);
-    }
-    
+   
     @Override 
     public synchronized void keyAction(final int keyCode, final int eventID) {
         final Optional<KeyCommands> cmd = this.vk_CodeToKeyCommand(keyCode);
@@ -137,5 +127,10 @@ public class KeysManager implements KeyboardObserver {
                 }
             }
         }
+    }
+    
+    /* per filtrare(da cui l'Optional)/mappare i tasti su i comandi */
+    private Optional<KeyCommands> vk_CodeToKeyCommand(final int vk_Code) { 
+        return Optional.ofNullable(this.mapVKCodeToKeyCmd.get(vk_Code));
     }
 }
