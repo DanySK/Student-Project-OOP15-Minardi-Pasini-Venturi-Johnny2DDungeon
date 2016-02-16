@@ -70,8 +70,8 @@ public class Vector2 extends Position{
 	/**
 	 * Returns a new vector resized to a specific newLength
 	 */
-	private Vector2 setLength(double newLength){
-		return new Vector2(this.getX(),this.getY()).norm().scl(newLength);
+	public Vector2 setLength(double newLength){
+		return new Vector2(this.norm().scl(newLength));
 	}
 
 }
