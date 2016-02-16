@@ -31,6 +31,10 @@ public interface GameState {
     
     public void addShoot(Bullet newBullet);
     
+    public void addMovableEntity(MovableEntity newEntity);
+    
+    public void addStableEntity(AbstractEntity newEntity);
+    
     public List<AbstractEntity> getStableList();
     
     public List<AbstractEntity> getMovableList(); 

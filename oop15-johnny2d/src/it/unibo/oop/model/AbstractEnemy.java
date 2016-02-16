@@ -25,6 +25,10 @@ public abstract class AbstractEnemy extends MovableEntity implements Enemy{
 		this.movementVector = behavior.getNextMove(targetPosition);
 	}
 		
+	public MovementBehavior getBehavior(){
+		return this.behavior;
+	}
+	
 	public abstract int getDamage();
 	
 	public abstract int getScoreValue();

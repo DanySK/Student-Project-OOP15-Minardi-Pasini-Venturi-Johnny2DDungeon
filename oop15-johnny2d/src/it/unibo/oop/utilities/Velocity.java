@@ -2,29 +2,29 @@ package it.unibo.oop.utilities;
 
 public class Velocity{
 
-	private int maxVelocity;
-	private int minVelocity;
-	private int time;
+	private double maxVelocity;
+	private double minVelocity;
+	private double velocityScale;
 	
-	public Velocity(int min, int max, int velocityScale){
-	
-		this.minVelocity=min;
-		this.maxVelocity=max;
+	public Velocity(double min, double max, double accelerationTime){	
+		this.minVelocity = min;
+		this.maxVelocity = max;
+		this.velocityScale = (this.maxVelocity - this.minVelocity) / accelerationTime;
 	}
 	
-	public void slow(){
-		
+	public double slow(double currentVelocity){		 
+		return currentVelocity + velocityScale;
 	}
 	
-	public void accelerate(){
-		
+	public double accelerate(double currentVelocity){
+		return currentVelocity + velocityScale;
 	}
 
-	public int getMaxVelocity() {
+	public double getMaxVelocity() {
 		return this.maxVelocity;
 	}
 
-	public int getMinVelocity() {
+	public double getMinVelocity() {
 		return this.minVelocity;
 	}
 	

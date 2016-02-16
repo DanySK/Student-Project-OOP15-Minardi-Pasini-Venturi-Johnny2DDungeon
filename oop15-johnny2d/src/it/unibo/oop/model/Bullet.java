@@ -20,13 +20,15 @@ public class Bullet extends MovableEntity implements Shot {
 	
 	public Bullet(int startingX, int startingY, Vector2 movementVector) {
 		super(startingX, startingY, movementVector, BULLET.getSpeed());
-		this.setInput(movementVector);
+		this.setMovement(movementVector);
 	}
 
 	public Bullet(MainCharacter heroPosition) {
-		this(heroPosition.getX(), heroPosition.getY(), heroPosition.getDirection());
-		this.setInput(heroPosition.getDirection());
-		this.getDirection().norm().scl(this.getVelocity().getMinVelocity());
+		this(heroPosition.getX(), heroPosition.getY(), heroPosition.getMovement());
+		//Takes the hero position
+		this.setMovement(heroPosition.getMovement());
+		//The movement vector is in the same Hero direction but in another speed values
+		this.getMovement().setLength(this.getVelocity().getMinVelocity());
 	}
 	
 	public void checkCollision(Position newPosition) throws CollisionHandlingException {
@@ -66,7 +68,12 @@ public class Bullet extends MovableEntity implements Shot {
 	
 	public void update(){
 		try {
+			//Calculates the new movement vector
+			Vector2 newMovement = this.getMovement().setLength(this.getVelocity().accelerate(this.getMovement().length()));			
+			this.setMovement(newMovement.clamp(this.getVelocity().getMinVelocity(), this.getVelocity().getMaxVelocity()));
+			//Check if there are collision in the new position
 			this.checkCollision(this.getPosition().sumVector(movementVector));
+			//moves if no exception
 			this.move();
 			this.remainingDistance -= this.movementVector.length();
 			if (remainingDistance <= 0){
@@ -85,5 +92,7 @@ public class Bullet extends MovableEntity implements Shot {
 		return BULLET.getWidth();
 	}
 
-
+	public double getRemainingDistance(){
+		return this.remainingDistance;
+	}
 }
