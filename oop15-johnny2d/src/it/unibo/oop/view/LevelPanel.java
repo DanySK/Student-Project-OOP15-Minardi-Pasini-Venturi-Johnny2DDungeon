@@ -1,7 +1,5 @@
 package it.unibo.oop.view;
 
-import static it.unibo.oop.utilities.Settings.SCREEN_DIMENSION;
-
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -15,7 +13,7 @@ import javax.swing.JPanel;
  * The panel containing the graphics elements of the
  * game's main level.
  */
-public class LevelPanel extends JPanel {
+public class LevelPanel extends BackgroundPanel {
 
 	private static final long serialVersionUID = 8057405927611227670L;
 	private static final int SPRITES_WIDTH = 32;
@@ -25,24 +23,17 @@ public class LevelPanel extends JPanel {
 	private static final int RIGHT_INDEX = 2;
 	private static final int BACK_INDEX = 3;
 	
-	private final ImageLoader loader;
 	private final SpriteSheet mainCharacterSheet;
 	private final SpriteSheet enemySheet;
 	private List<BufferedImage> mainCharacterSprites;
 	private List<BufferedImage> enemySprites;
-	private BufferedImage background;
 	private final JLabel stats;
 	
 	/**
 	 * Builds the panel.
 	 */
-	public LevelPanel() {
-		this.loader = new ImageLoader();
-		/*try {
-			this.background = this.loader.load("/levelBackground.jpg");
-		} catch (IOException e) {
-			System.out.println("Background not found");
-		}*/
+	public LevelPanel(String name) {
+		super("/background.jpg");
 		this.mainCharacterSheet = new SpriteSheet("/mainCharacter.png");
 		this.mainCharacterSprites = mainCharacterSheet.split(SPRITES_WIDTH, SPRITES_HEIGHT);
 		this.enemySheet = new SpriteSheet("/enemy.png");

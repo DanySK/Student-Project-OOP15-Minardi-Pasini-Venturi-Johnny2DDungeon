@@ -2,10 +2,7 @@ package it.unibo.oop.view;
 
 import static it.unibo.oop.utilities.Settings.SCREEN_DIMENSION;
 
-import java.awt.Toolkit;
-import java.lang.reflect.InvocationTargetException;
 import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
 import it.unibo.oop.controller.KeyboardObserver;
 
