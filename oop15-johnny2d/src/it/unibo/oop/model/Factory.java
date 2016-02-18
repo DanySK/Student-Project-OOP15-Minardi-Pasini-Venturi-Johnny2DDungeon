@@ -6,8 +6,10 @@ import static it.unibo.oop.utilities.CharactersSettings.WALL;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import it.unibo.oop.utilities.Position;
+import it.unibo.oop.utilities.Settings;
 import it.unibo.oop.utilities.Vector2;
 
 public class Factory {
@@ -72,16 +74,15 @@ public class Factory {
 	}
 	
 	public static class BulletFactory {
-		public static Bullet generateBullet(int xPos, int yPos){
-			//TODO
-			return null;
+		public static Bullet shootBulletFromCharacter(MainCharacter mainChar){
+			return new Bullet(mainChar);
 		}
 	}
 	
 	public static class PositionFactory {
-		public static Position generateRandomPsition(int xPos, int yPos){
-			//TODO
-			return null;
+		public static Position generateRandomPsition(int maxX, int maxY){
+			Random nextRandom = new Random();
+			return new Position(nextRandom.nextInt(maxX), nextRandom.nextInt(maxY));
 		}
 	}
 

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import it.unibo.oop.utilities.Direction;
+import it.unibo.oop.utilities.Position;
+import it.unibo.oop.utilities.Settings;
 
 public class GameStateImpl implements GameState {
 
@@ -25,7 +27,14 @@ public class GameStateImpl implements GameState {
     }
     
     protected void initialize(int levelNumber) {
-    	//TODO
+    	
+    	//TODO Gestire l'HUD e le posizioni solo dentro l'arena
+    	johnnyCharacter = Optional.ofNullable(Factory.MainCharacterFactory.generateCentredCharacter(Settings.SCREEN_HEIGHT, Settings.SCREEN_WIDTH));
+    	for (int nMonsters = 0; nMonsters < levelNumber*10; nMonsters++){
+    		Position randomPos = Factory.PositionFactory.generateRandomPsition(Settings.SCREEN_WIDTH, Settings.SCREEN_WIDTH);
+    		this.addMovableEntity(Factory.EnemiesFactory.generateStillBasicEnemy(randomPos.getX(), randomPos.getY()));
+    	}
+    	    
     }
 
     protected void removeEntity(Entity entity) {
