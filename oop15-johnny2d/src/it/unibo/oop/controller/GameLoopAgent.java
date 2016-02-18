@@ -46,6 +46,7 @@ public class GameLoopAgent implements AgentInterface {
             this.dbgKeysMan();        /* per debugging */
             // GameStateImpl.getInstance().updatePositions(this.mainCharDir, this.isMainCharShooting);
             /* chiamo V che si aggiorna e disegna frame*/
+            this.viewsMan.getLevel().updateLevel();
             this.viewsMan.getLevel().showIt();
             try {
                 Thread.sleep(SLEEPING_TIME);

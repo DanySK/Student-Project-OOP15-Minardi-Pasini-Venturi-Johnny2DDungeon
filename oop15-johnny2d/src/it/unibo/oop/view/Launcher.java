@@ -77,11 +77,11 @@ public class Launcher extends BaseMenu {
             final Object src = e.getSource();
             Optional<State> state = Optional.empty();
             if (src == Launcher.this.quit) {
-                final int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?",
-                                     "Quit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-                if (response == JOptionPane.YES_OPTION) {
-                    state = Optional.of(State.EXIT);
-                }
+//                final int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to exit?",
+//                                     "Quit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+//                if (response == JOptionPane.YES_OPTION) {
+                    state = Optional.of(State.QUIT);
+                
             } else if (src == Launcher.this.options) {
                 state = Optional.of(State.OPTIONS);
             } else if (src == Launcher.this.play){
