@@ -16,7 +16,7 @@ import it.unibo.oop.utilities.Vector2;
  */
 public class Bullet extends MovableEntity implements Shot {
 
-	private double remainingDistance = 10 + new Random().nextInt(10);
+	private double remainingDistance = 200 + new Random().nextInt(50);
 	
 	public Bullet(double startingX, double startingY, Vector2 movementVector) {
 		super(startingX, startingY, movementVector, BULLET.getSpeed());

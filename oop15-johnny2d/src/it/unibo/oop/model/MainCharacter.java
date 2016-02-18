@@ -21,13 +21,17 @@ public class MainCharacter extends MovableEntity implements Shooter{
 	private Health currentHealth;
 	private Score currentScore;
 	
-	public MainCharacter(int startingX, int startingY, Vector2 movementVector, Velocity speedValue) {
+	public MainCharacter(double startingX, double startingY, Vector2 movementVector, Velocity speedValue) {
 		super(startingX, startingY, movementVector, speedValue);
 		currentHealth = new Health(3);
 		currentScore = new Score(0);
 	}
 	
-	public MainCharacter(int startingX, int startingY) {
+	public MainCharacter(double startingX, double startingY, Vector2 startingMovement) {
+		this(startingX, startingY, startingMovement, MAIN_CHARACTER.getSpeed());
+	}
+	
+	public MainCharacter(double startingX, double startingY) {
 		this(startingX, startingY, new Vector2(), MAIN_CHARACTER.getSpeed());
 	}
 	
@@ -36,8 +40,9 @@ public class MainCharacter extends MovableEntity implements Shooter{
 	}
 	
 	public void update(Direction newDirection , boolean isShooting){
-		//If the main character is accelerating
+		//Takes the new frame direction
 		Vector2 newMovement = newDirection.getVector2();
+		//If the main character is accelerating
 		try {
 			if (newDirection != Direction.NONE){
 				newMovement = newMovement.setLength(this.getVelocity().accelerate(this.getMovement().length()));
@@ -49,7 +54,6 @@ public class MainCharacter extends MovableEntity implements Shooter{
 			this.setMovement(newMovement);
 			this.move();	
 		} catch (CollisionHandlingException e) {
-			
 		} finally {
 			if (isShooting && !this.currentHealth.isDead()){
 				this.shoot();
@@ -59,8 +63,8 @@ public class MainCharacter extends MovableEntity implements Shooter{
 	}
 
 	public void checkCollision(Position newPosition) throws CollisionHandlingException {	
-		//TODO Mettere factory
-		MainCharacter tmpJohnny = new MainCharacter(newPosition.getIntX(), newPosition.getIntY(),this.getMovement(), this.getVelocity());
+		
+		MainCharacter tmpJohnny = Factory.MainCharacterFactory.generateStillCharacter(newPosition.getX(), newPosition.getY());
 		//Counting the number of collided walls (Usually 1)
 		long numWallCollisions = this.getEnvironment().getStableList().stream()
 				  													  .filter(x -> x instanceof Wall)
@@ -97,12 +101,12 @@ public class MainCharacter extends MovableEntity implements Shooter{
 						   				  .map(x -> x.getDamage())	
 						   				  .reduce((x,y) -> x+y)
 						   				  .get();
+			this.currentHealth.decreaseHealth(dmgDealt);
+			
 			int scoreGained = enemyCollisions.stream()
 	   				  						 .map(x -> x.getScoreValue())	
 	   				  						 .reduce((x,y) -> x+y)
-	   				  						 .get();
-			
-			this.currentHealth.decreaseHealth(dmgDealt);
+	   				  						 .get();			
 			this.currentScore.increaseScore(scoreGained);
 			
 			enemyCollisions.stream()
