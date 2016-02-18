@@ -25,9 +25,12 @@ public class GameStateImpl implements GameState {
     }
     
     protected void initialize(int levelNumber) {
+    	//TODO
     }
 
     protected void removeEntity(Entity entity) {
+    	movableList.remove(entity);
+    	stableList.remove(entity);
     }
 
     public void updatePositions(final Direction newDirection, final boolean isShooting) {

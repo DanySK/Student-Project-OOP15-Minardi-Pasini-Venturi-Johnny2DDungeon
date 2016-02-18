@@ -10,16 +10,12 @@ public abstract class MovableEntity extends AbstractEntity implements Movable {
 	private Vector2 movementVector;
 	private Velocity speedValues;
 	
-	public MovableEntity(double startingX, double startingY, Vector2 movementVector) {
+	public MovableEntity(double startingX, double startingY, Vector2 movementVector, Velocity speedValue) {
 		super(startingX,startingY);
 		this.movementVector = movementVector;
-	}
-	
-	public MovableEntity(double startingX, double startingY, Vector2 movementVector, Velocity speedValue) {
-		this(startingX,startingY, movementVector);
 		this.speedValues = speedValue;		
-	}		
-	
+	}
+		
 	public void move(){
 		this.setPosition(this.getPosition().sumVector(movementVector)); 
 	}

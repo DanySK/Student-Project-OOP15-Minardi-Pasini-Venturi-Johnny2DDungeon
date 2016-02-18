@@ -1,9 +1,14 @@
 package it.unibo.oop.model;
 
-import static it.unibo.oop.utilities.CharactersSettings.*;
+import static it.unibo.oop.utilities.CharactersSettings.BASIC_ENEMY;
+import static it.unibo.oop.utilities.CharactersSettings.MAIN_CHARACTER;
+import static it.unibo.oop.utilities.CharactersSettings.WALL;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import it.unibo.oop.utilities.Position;
+import it.unibo.oop.utilities.Vector2;
 
 public class Factory {
 	
@@ -27,7 +32,7 @@ public class Factory {
 		
 		public static List<Wall> generateArena(int panelHeight, int panelWidth){
 			List<Wall> resultList = new ArrayList<>();
-			int hudDimension = (int) (panelHeight * 0.3);
+			int hudDimension = (int) (panelHeight * 0.3);  //HUD DIMENSION
 			int drawableAreaHeight = panelHeight - hudDimension;
 			
 			int heightRest = drawableAreaHeight%WALL.getHeight();
@@ -36,9 +41,10 @@ public class Factory {
 			int heightBlocks = drawableAreaHeight/WALL.getHeight();
 			int widthBlocks = panelWidth/WALL.getWidth();
 			
-			for (int offsetX = 1; offsetX < heightBlocks-1; offsetX++){
-				for (int offsetY = 1; offsetY < widthBlocks-1; offsetY++){
-					resultList.add(new Wall(widthRest/2 + offsetX * WALL.getWidth() + WALL.getWidth()/2, heightRest/2 +offsetY * WALL.getHeight() + WALL.getHeight()/2 ));
+			for (int offsetX = 1; offsetX < widthBlocks-1; offsetX++){
+				for (int offsetY = 1; offsetY < heightBlocks-1; offsetY++){
+					resultList.add(new Wall(widthRest/2 + offsetX * WALL.getWidth() + WALL.getWidth()/2, 
+											hudDimension + heightRest/2 +offsetY * WALL.getHeight() + WALL.getHeight()/2 ));
 				}
 			}			
 			return resultList;
@@ -46,23 +52,35 @@ public class Factory {
 	}
 	
 	public static class MainCharacterFactory {
-		public static MainCharacter generateCentredCharacter(int panelHeight, int panelWidth){
+		public static MainCharacter generateCentredCharacter(double panelHeight, double panelWidth){
 			return new MainCharacter();
 		}
 		
-		public static MainCharacter generateCharacter(int startingX, int startingY){
+		public static MainCharacter generateStillCharacter(double startingX, double startingY){
 			return new MainCharacter(startingX,startingY);
+		}
+		
+		public static MainCharacter generateMovingCharacter(double startingX, double startingY, Vector2 movement){
+			return new MainCharacter(startingX,startingY,movement,MAIN_CHARACTER.getSpeed());
 		}
 	}
 	
 	public static class EnemiesFactory {
-		public static BasicMonster generateBasicEnemy(int xPos, int yPos){
-			return null;
+		public static BasicMonster generateStillBasicEnemy(double intialX, double intialY){
+			return new BasicMonster(intialX, intialY, new Vector2(), BASIC_ENEMY.getSpeed());
 		}
 	}
 	
 	public static class BulletFactory {
 		public static Bullet generateBullet(int xPos, int yPos){
+			//TODO
+			return null;
+		}
+	}
+	
+	public static class PositionFactory {
+		public static Position generateRandomPsition(int xPos, int yPos){
+			//TODO
 			return null;
 		}
 	}
