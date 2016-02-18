@@ -10,7 +10,7 @@ public class PauseMenu extends BaseMenu {
         REPLAY("Replay", State.START),
         RESUME("Resume", State.PLAY),
         OPTIONS("Options", State.OPTIONS),
-        MAIN_MENU("Main Menu", State.LAUNCHING);
+        QUIT("Quit", State.QUIT);
         
         private final String name;
         private final State state;
@@ -62,7 +62,7 @@ public class PauseMenu extends BaseMenu {
 //        resume.addActionListener((e) -> this.doObsAction(obs -> new Thread(()-> obs.stateAction(State.PLAY)).start()));
 //        options.addActionListener((e) -> this.doObsAction(obs -> new Thread(()-> obs.stateAction(State.OPTIONS)).start()));
 //        mainMenu.addActionListener((e) -> this.doObsAction(obs -> new Thread(()-> obs.stateAction(State.LAUNCHING)).start()));
-        
+     
     }
     
 //    /* ACTIONS */

@@ -15,4 +15,8 @@ public interface LevelInterface extends Showable {
      */
     public void addObserver(final KeyboardObserver obs);
 
+    /**
+     * repaints the panel.
+     */
+    public void updateLevel();
 }
