@@ -7,6 +7,7 @@ import java.util.Optional;
 import it.unibo.oop.utilities.Direction;
 import it.unibo.oop.utilities.Position;
 import it.unibo.oop.utilities.Settings;
+import static it.unibo.oop.utilities.Settings.*;
 
 public class GameStateImpl implements GameState {
 
@@ -14,6 +15,7 @@ public class GameStateImpl implements GameState {
     private List<MovableEntity> movableList;
     private List<AbstractEntity> stableList;
     private Optional<MainCharacter> johnnyCharacter;
+    private Arena gameArena;
     
     private GameStateImpl() {
         this.movableList = new ArrayList<>();
@@ -28,10 +30,12 @@ public class GameStateImpl implements GameState {
     
     protected void initialize(int levelNumber) {
     	
-    	//TODO Gestire l'HUD e le posizioni solo dentro l'arena
-    	johnnyCharacter = Optional.ofNullable(Factory.MainCharacterFactory.generateCentredCharacter(Settings.SCREEN_HEIGHT, Settings.SCREEN_WIDTH));
+    	//TODO Migliorare la creazione delle posizioni
+    	
+    	this.gameArena= Factory.WallFactory.generateArena(SCREEN_HEIGHT, SCREEN_WIDTH);
+    	this.johnnyCharacter = Optional.ofNullable(Factory.MainCharacterFactory.generateCentredCharacter(SCREEN_HEIGHT, SCREEN_WIDTH));
     	for (int nMonsters = 0; nMonsters < levelNumber*10; nMonsters++){
-    		Position randomPos = Factory.PositionFactory.generateRandomPsition(Settings.SCREEN_WIDTH, Settings.SCREEN_WIDTH);
+    		Position randomPos = Factory.PositionFactory.generateRandomPsition(SCREEN_WIDTH, SCREEN_WIDTH);
     		this.addMovableEntity(Factory.EnemiesFactory.generateStillBasicEnemy(randomPos.getX(), randomPos.getY()));
     	}
     	    

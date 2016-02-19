@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Random;
 
 import it.unibo.oop.utilities.Position;
-import it.unibo.oop.utilities.Settings;
 import it.unibo.oop.utilities.Vector2;
 
 public class Factory {
@@ -32,24 +31,9 @@ public class Factory {
 			return resultList;
 		}
 		
-		public static List<Wall> generateArena(int panelHeight, int panelWidth){
-			List<Wall> resultList = new ArrayList<>();
-			int hudDimension = (int) (panelHeight * 0.3);  //HUD DIMENSION
-			int drawableAreaHeight = panelHeight - hudDimension;
-			
-			int heightRest = drawableAreaHeight%WALL.getHeight();
-			int widthRest = panelWidth%WALL.getWidth();
-			
-			int heightBlocks = drawableAreaHeight/WALL.getHeight();
-			int widthBlocks = panelWidth/WALL.getWidth();
-			
-			for (int offsetX = 1; offsetX < widthBlocks-1; offsetX++){
-				for (int offsetY = 1; offsetY < heightBlocks-1; offsetY++){
-					resultList.add(new Wall(widthRest/2 + offsetX * WALL.getWidth() + WALL.getWidth()/2, 
-											hudDimension + heightRest/2 +offsetY * WALL.getHeight() + WALL.getHeight()/2 ));
-				}
-			}			
-			return resultList;
+		public static Arena generateArena(int panelHeight, int panelWidth){
+			//TODO settare l'hud dimension
+			return new Arena(panelHeight,panelWidth,(int)(panelHeight*0.2));
 		}
 	}
 	
