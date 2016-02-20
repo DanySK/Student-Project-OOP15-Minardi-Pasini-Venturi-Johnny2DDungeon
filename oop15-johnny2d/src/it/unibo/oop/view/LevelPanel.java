@@ -50,54 +50,25 @@ public class LevelPanel extends BackgroundPanel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
         this.drawMainCharacter(g);
-        /*
-         * this.drawMovables(g); this.drawStables(g);
-         */
+        //this.drawMovables(g);
+        //this.drawStables(g);
         this.drawStats(g);
     }
 
-    /**
-     * Draws the main character.
-     * 
-     * @param g
-     *            the {@link Graphics} object
-     */
     private void drawMainCharacter(final Graphics g) {
-        g.drawImage(this.mainCharacterSprites.get(gs.getMainChar().get().getFaceDirection()),
-                (gs.getMainChar().get().getPosition().getIntX()), (gs.getMainChar().get().getPosition().getIntY()),
-                this);
+        g.drawImage(this.mainCharacterSprites.get(gs.getMainChar().get().getFaceDirection()), (gs.getMainChar().get().getPosition().getIntX()),
+        		(gs.getMainChar().get().getPosition().getIntY()), this);
     }
 
-    /**
-     * Draws the movable entities.
-     * 
-     * @param g
-     *            the {@link Graphics} object
-     */
-    /*
-     * private void drawMovables(final Graphics g) {
-     * g.drawImage(this.enemySprites.get(FRONT_INDEX), (this.getX() + 200),
-     * (this.getY() + 200), this); }
-     */
+    	
+    private void drawMovables(final Graphics g) {
+    	
+    }
 
-    /**
-     * Draws the stable entities.
-     * 
-     * @param g
-     *            the {@link Graphics} object
-     */
-    /*
-     * private void drawStables(final Graphics g) {
-     * g.drawImage(this.enemySprites.get(FRONT_INDEX), (this.getX() + 200),
-     * (this.getY() + 200), this); }
-     */
+    private void drawStables(final Graphics g) {
+    	
+    }
 
-    /**
-     * Draws the stats for the main character.
-     * 
-     * @param g
-     *            the {@link Graphics} object
-     */
     private void drawStats(final Graphics g) {
         g.drawImage(this.mainCharacterSprites.get(DOWN), this.getX(), this.getY(), this);
         this.stats.setText("    Life: 100    Score: 0");

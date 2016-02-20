@@ -98,11 +98,8 @@ public abstract class AbstractEntity implements Entity {
 			this.gameEnvironment = Optional.empty();
 		}
 	}	
-	public boolean hasEnvirnment(){
-		if (this.gameEnvironment.isPresent() ){
-			return true;
-		}
-		return false;
+	public boolean hasEnvironment(){
+		return this.gameEnvironment.isPresent();
 	}	
 	public GameStateImpl getEnvironment(){
 		return this.gameEnvironment.get();
