@@ -14,7 +14,6 @@ import static it.unibo.oop.utilities.Direction.*;
 public class SpriteSheet {
 
     private BufferedImage sheet;
-    private final Map<Direction, BufferedImage> sprites;
 
     /**
      * Constructs a new {@link SpriteSheet}.
@@ -28,11 +27,10 @@ public class SpriteSheet {
         } catch (IOException e) {
             System.out.println("Sheet not found");
         }
-        this.sprites = new HashMap<>();
     }
 
     private BufferedImage grabSprite(final int x, final int y, final int width, final int height) {
-        return sheet.getSubimage(x, y, width, height);
+        return this.sheet.getSubimage(x, y, width, height);
     }
 
     /**
@@ -40,54 +38,41 @@ public class SpriteSheet {
      * considers only the first sprite for every row (only one
      * animation).
      * 
-     * @param imagesWidth
+     * @param spritesWidth
      *            the width of each sprite in the
      *            {@link SpriteSheet}
-     * @param imagesHeight
+     * @param spritesHeight
      *            the height of each sprite in the
      *            {@link SpriteSheet}
      * @return a {@link Map} of {@link BufferedImage}
      *         with all the sprites in the {@link SpriteSheet}
      *         mapped with their {@link Direction}
      */
-    public Map<Direction, BufferedImage> split(final int imagesWidth, final int imagesHeight) {
-        final boolean isSplitted = ((sheet.getHeight() % imagesHeight == 0) && (sheet.getWidth() % imagesWidth == 0))
+    public Map<Direction, BufferedImage> split(final int spritesWidth, final int spritesHeight) {
+    	final Map<Direction, BufferedImage> sprites = new HashMap<>();
+        final boolean isSplitted = ((this.sheet.getHeight() % spritesHeight == 0) && (this.sheet.getWidth() % spritesWidth == 0))
                 ? true : false;
-        if ((sheet != null) && isSplitted) {
-            for (int y = 0, currentRow = 0; y < sheet.getHeight(); y += imagesHeight, currentRow++) {
-                for (int x = 0; x < sheet.getWidth(); x += imagesWidth) {
-                    switch (currentRow) {
-                    case 0:
-                        sprites.put(DOWN, grabSprite(x, y, imagesWidth, imagesHeight));
+        if (isSplitted) {
+            for (int y = 0, currentRow = 0; y < this.sheet.getHeight(); y += spritesHeight, currentRow++) {
+            	switch (currentRow) {
+                	case 0:
+                        sprites.put(DOWN, this.grabSprite(0, y, spritesWidth, spritesHeight));
                         break;
                     case 1:
-                        sprites.put(LEFT, grabSprite(x, y, imagesWidth, imagesHeight));
+                        sprites.put(LEFT, this.grabSprite(0, y, spritesWidth, spritesHeight));
                         break;
                     case 2:
-                        sprites.put(RIGHT, grabSprite(x, y, imagesWidth, imagesHeight));
+                        sprites.put(RIGHT, this.grabSprite(0, y, spritesWidth, spritesHeight));
                         break;
                     case 3:
-                        sprites.put(UP, grabSprite(x, y, imagesWidth, imagesHeight));
+                        sprites.put(UP, this.grabSprite(0, y, spritesWidth, spritesHeight));
                         break;
                     default:
-                        sprites.put(DOWN, grabSprite(x, y, imagesWidth, imagesHeight));
+                        sprites.put(DOWN, this.grabSprite(0, y, spritesWidth, spritesHeight));
                         break;
-                    }
-                }
+            	}
             }
         }
         return sprites;
-    }
-
-    /**
-     * Returns the sprite in the {@link Map} corresponding to the
-     * given {@link Direction}.
-     * 
-     * @param dir
-     *            the {@link Direction} of the sprite
-     * @return the corresponding sprite
-     */
-    public BufferedImage getSprite(final Direction dir) {
-        return sprites.get(dir);
     }
 }
