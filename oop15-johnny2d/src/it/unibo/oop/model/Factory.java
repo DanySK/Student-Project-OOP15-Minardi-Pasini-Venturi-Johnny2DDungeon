@@ -6,7 +6,6 @@ import static it.unibo.oop.utilities.CharactersSettings.WALL;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import it.unibo.oop.utilities.Position;
 import it.unibo.oop.utilities.Vector2;
@@ -49,7 +48,14 @@ public class Factory {
 			return new MainCharacter();
 		}
 		
+		public static MainCharacter generateCentredCharacter(Position centerPos){
+			return new MainCharacter(centerPos.getX(), centerPos.getY());
+		}
+		
+		public static MainCharacter generateStillCharacter(double startingX, double startingY){
+
 		public static MainCharacter generateStillCharacter(final double startingX, final double startingY){
+
 			return new MainCharacter(startingX,startingY);
 		}
 		
@@ -77,6 +83,9 @@ public class Factory {
 			return new Bullet(mainChar);
 		}
 	}
+<<<<<<< local
+
+=======
 	
 	public static class PositionFactory {
 		
@@ -88,4 +97,5 @@ public class Factory {
 			return new Position(nextRandom.nextInt(maxX), nextRandom.nextInt(maxY));
 		}
 	}
+>>>>>>> other
 }
