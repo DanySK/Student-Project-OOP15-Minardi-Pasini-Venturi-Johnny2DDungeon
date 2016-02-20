@@ -42,6 +42,10 @@ public class Factory {
 			return new MainCharacter();
 		}
 		
+		public static MainCharacter generateCentredCharacter(Position centerPos){
+			return new MainCharacter(centerPos.getX(), centerPos.getY());
+		}
+		
 		public static MainCharacter generateStillCharacter(double startingX, double startingY){
 			return new MainCharacter(startingX,startingY);
 		}
@@ -60,13 +64,6 @@ public class Factory {
 	public static class BulletFactory {
 		public static Bullet shootBulletFromCharacter(MainCharacter mainChar){
 			return new Bullet(mainChar);
-		}
-	}
-	
-	public static class PositionFactory {
-		public static Position generateRandomPsition(int maxX, int maxY){
-			Random nextRandom = new Random();
-			return new Position(nextRandom.nextInt(maxX), nextRandom.nextInt(maxY));
 		}
 	}
 
