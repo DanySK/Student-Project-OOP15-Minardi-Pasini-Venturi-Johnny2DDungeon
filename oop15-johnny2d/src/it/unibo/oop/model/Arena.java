@@ -71,6 +71,39 @@ public class Arena {
 		return this.spawnPoints.get(tmpRandom.nextInt());
 	}
 	
+	public double getUpperY(){
+		return this.playableRectangle.getY();
+	}
 	
+	public double getLowerY(){
+		return this.playableRectangle.getY()+ this.playableRectangle.getHeight();
+	}
+	
+	public double getLeftX(){
+		return this.playableRectangle.getX();
+	}
+	
+	public double getRightX(){
+		return this.playableRectangle.getX()+ this.playableRectangle.getWidth();
+	}
+	
+	public Position getPositionInside(){
+		Random randX = new Random((long) playableRectangle.getWidth());
+		Random randY = new Random((long) playableRectangle.getHeight());
+		
+		return new Position(randX.nextInt()+ this.playableRectangle.getX(), randY.nextInt() + this.playableRectangle.getY());
+	}	
+	public boolean isInside(Entity entity){
+		boolean isInside = true;
+		if (!this.playableRectangle.intersects(entity.getBounds())){
+			return false;
+		}
+		for(Wall block : this.boundsList){
+			if (block.intersecate(entity)){
+				isInside = false;
+			}
+		}
+		return isInside;
+	}
 
 }

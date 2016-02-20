@@ -12,8 +12,8 @@ public interface Enemy {
 	
 	public void useBehavior(Position targetPosition);
 	
-	int getScoreValue();
+	public int getScoreValue();
 	
-	int getDamage();
+	public int getDamage();
 	
 }
