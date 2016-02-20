@@ -14,22 +14,22 @@ public interface Entity {
 	 * Function that returns the position of every object placed in the map.
 	 * @return The position of this entity
 	 */
-	Position getPosition();
+	public Position getPosition();
 	/**
 	 * Checks if the position is the same of the passed one.
 	 * @param newPosition
 	 * @return True if the position is the same.
 	 */
-	boolean equalsPosition(Position newPosition);
+	public boolean equalsPosition(Position newPosition);
 	
 	/**
 	 * It return and calculates the bounds of a specific {@link Entity}.
 	 * @return The {@link Rectangle} containing the object
 	 */
-	Rectangle getBounds();
+	public Rectangle getBounds();
 	/**
 	 * 
 	 * @return True if the entity intersecate the secondEntity
 	 */
-	boolean intersecate(Entity secondEntity);
+	public boolean intersecate(Entity secondEntity);
 }
