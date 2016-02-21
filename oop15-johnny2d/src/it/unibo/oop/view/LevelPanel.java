@@ -8,11 +8,14 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.swing.JLabel;
 
+import it.unibo.oop.model.Bullet;
 import it.unibo.oop.model.Collectable;
+import it.unibo.oop.model.Enemy;
 import it.unibo.oop.model.GameState;
 import it.unibo.oop.model.GameStateImpl;
 import it.unibo.oop.model.Wall;
@@ -28,6 +31,8 @@ public class LevelPanel extends BackgroundPanel {
 
     private final Map<Direction, BufferedImage> mainCharacterSprites;
     private final Map<Direction, BufferedImage> enemySprites;
+    private BufferedImage bonus;
+    private BufferedImage bullet;
     private final JLabel stats;
     private final GameState gs;
 
@@ -42,6 +47,12 @@ public class LevelPanel extends BackgroundPanel {
         this.mainCharacterSprites = mainCharacterSheet.split(MAIN_CHARACTER.getWidth(), MAIN_CHARACTER.getHeight());
         final SpriteSheet enemySheet = new SpriteSheet("/enemy.png");
         this.enemySprites = enemySheet.split(BASIC_ENEMY.getWidth(), BASIC_ENEMY.getHeight());
+        try {
+            this.bonus = ImageLoader.load("/coin.png");
+            this.bullet = ImageLoader.load("/bullet.png");
+        } catch (IOException e) {
+            System.out.println("Error loading the sprites");
+        }
         this.stats = new JLabel();
         this.stats.setFont(new Font("Verdana", 1, 20));
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -66,7 +77,12 @@ public class LevelPanel extends BackgroundPanel {
     	
     private void drawMovables(final Graphics g) {
     	gs.getMovableList().forEach(e -> {
-    	    g.drawImage(this.enemySprites.get(e.getFaceDirection()), e.getPosition().getIntX(), e.getPosition().getIntY(), this);
+    	    if (e instanceof Enemy) {
+    	        g.drawImage(this.enemySprites.get(e.getFaceDirection()), e.getPosition().getIntX(), e.getPosition().getIntY(), this);
+    	    }
+    	    if (e instanceof Bullet) {
+    	        g.drawImage(this.bullet, e.getPosition().getIntX(), e.getPosition().getIntY(), this);
+    	    }
     	});
     }
 
@@ -76,7 +92,7 @@ public class LevelPanel extends BackgroundPanel {
                 g.drawRect(e.getPosition().getIntX(), e.getPosition().getIntY(), WALL.getWidth(), WALL.getHeight());
             }
             if (e instanceof Collectable) {
-                g.drawImage(this.enemySprites.get(e.getFaceDirection()), e.getPosition().getIntX(), e.getPosition().getIntY(), this);
+                g.drawImage(this.bonus, e.getPosition().getIntX(), e.getPosition().getIntY(), this);
             }
         });
     }
