@@ -25,7 +25,7 @@ public class SpriteSheet {
         try {
             this.sheet = ImageLoader.load(sheetName);
         } catch (IOException e) {
-            System.out.println("Sheet not found");
+            System.out.println("Error loading the sprites");
         }
     }
 
