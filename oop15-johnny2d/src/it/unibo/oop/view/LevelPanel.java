@@ -42,7 +42,7 @@ public class LevelPanel extends BackgroundPanel {
      * Builds the {@link javax.swing.JPanel} and loads every {@link SpriteSheet}.
      */
     public LevelPanel() {
-        super("/background.jpg");
+        super("/level.jpg");
         this.gs = GameStateImpl.getInstance();
         final SpriteSheet mainCharacterSheet = new SpriteSheet("/mainCharacter.png");
         this.mainCharacterSprites = mainCharacterSheet.split(MAIN_CHARACTER.getWidth(), MAIN_CHARACTER.getHeight());
