@@ -21,11 +21,11 @@ public interface GameState {
      */
     
     
-    List<AbstractEntity> getStableList();
+    public List<AbstractEntity> getStableList();
     
-    List<MovableEntity> getMovableList(); 
+    public List<MovableEntity> getMovableList(); 
     
-    Optional<MainCharacter> getMainChar();
+    public Optional<MainCharacter> getMainChar();
     
-    Arena getArena();
+    public Arena getArena();
 }

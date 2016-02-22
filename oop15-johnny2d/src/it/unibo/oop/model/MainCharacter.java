@@ -39,6 +39,7 @@ public class MainCharacter extends MovableEntity implements Shooter {
     public void update(final Direction newDirection, final boolean isShooting) {
         // Takes the new frame direction
         Vector2 newMovement = newDirection.getVector2();
+        System.out.println(newMovement);
         // If the main character is accelerating
         try {
             if (newDirection != Direction.NONE) {
@@ -46,9 +47,6 @@ public class MainCharacter extends MovableEntity implements Shooter {
             } else {
                 newMovement = newMovement.setLength(this.getVelocity().slow(this.getMovement().length()));
             }
-            // newMovement =
-            // newMovement.clamp(this.getVelocity().getMinVelocity(),
-            // this.getVelocity().getMaxVelocity());
             this.checkCollision(this.getPosition().sumVector(newMovement));
             this.setMovement(newMovement);
             this.move();
