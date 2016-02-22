@@ -35,7 +35,7 @@ public class Factory {
 		
 		public static Arena generateArena(final int panelHeight, final int panelWidth){
 			//TODO settare l'hud dimension
-			return new Arena(panelHeight,panelWidth,(int)(panelHeight*0.2));
+			return new Arena(panelHeight,panelWidth,(int)(panelHeight*0.05));
 		}
 	}
 	
