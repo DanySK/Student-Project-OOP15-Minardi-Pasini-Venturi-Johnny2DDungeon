@@ -18,8 +18,8 @@ public class OptionsMenu extends MenuPanel {
 
     private static final long serialVersionUID = -4689323418673684324L;
     private static final int FONT_SIZE = 30;
-    private static final int PANEL_WIDTH = 160;
-    private static final int PANEL_HEIGHT = 100;
+//    private static final int PANEL_WIDTH = 160;
+//    private static final int PANEL_HEIGHT = 100;
 
     /**
      * @param stateObs
@@ -40,13 +40,14 @@ public class OptionsMenu extends MenuPanel {
         check.setOpaque(false);
         check.setSelected(true);
         check.addActionListener(e -> ViewsManagerImpl.getInstance().getView().enableMusic(check.isSelected()));
-
-        final JPanel musicPane = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
-        musicPane.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
-        musicPane.setOpaque(false);
-        musicPane.add(label);
-        musicPane.add(check);
-        this.addComponent(musicPane, false);
+        this.addComponent(check, true);
+        
+//        final JPanel musicPane = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 10));
+//        musicPane.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
+//        musicPane.setOpaque(false);
+//        musicPane.add(label);
+//        musicPane.add(check);
+//        this.addComponent(musicPane, false);
 
         /* BUTTONS CREATION */
         this.addStateButton(new MenuPanel.StateButton("Credits", AppState.CREDITS),
