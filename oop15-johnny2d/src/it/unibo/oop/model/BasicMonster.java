@@ -40,7 +40,7 @@ public class BasicMonster extends AbstractEnemy {
     public void checkCollision(final Position newPosition) throws CollisionHandlingException {
         final BasicMonster tmpEnemy = Factory.EnemiesFactory.generateStillBasicEnemy(newPosition.getIntX(), newPosition.getIntY());
         // Checks if the entity in the next move is inside the rectanuglar Arena
-        if (this.getEnvironment().getArena().isInside(tmpEnemy)) {
+        if (!this.getEnvironment().getArena().isInside(tmpEnemy)) {
             throw new CollisionHandlingException("Next movement not inside the arena");
         }
         final long numWallCollisions = this.getEnvironment().getStableList().stream().filter(x -> x instanceof Wall)

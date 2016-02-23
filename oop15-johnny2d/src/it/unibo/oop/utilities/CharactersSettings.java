@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public enum CharactersSettings {
 	MAIN_CHARACTER(32, 48, new Velocity(8, 12, 5)),
-	BASIC_ENEMY(32, 48, new Velocity(7, 15, 10)),
+	BASIC_ENEMY(32, 48, new Velocity(5, 5, 10)),
 	BULLET(8, 8, new Velocity(20, 30, 1)),
 	BONUS(32, 32, null),
 	WALL(32, 32, null);
