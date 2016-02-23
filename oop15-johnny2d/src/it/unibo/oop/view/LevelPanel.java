@@ -35,6 +35,7 @@ public class LevelPanel extends BackgroundPanel {
     private final Map<Direction, BufferedImage> mainCharacterSprites;
     private final Map<Direction, BufferedImage> enemySprites;
     private BufferedImage arena;
+    private BufferedImage wall;
     private BufferedImage bonus;
     private BufferedImage bullet;
     private BufferedImage heart;
@@ -42,8 +43,7 @@ public class LevelPanel extends BackgroundPanel {
     private final GameState gs;
 
     /**
-     * Builds the {@link javax.swing.JPanel} and loads every {@link SpriteSheet}
-     * .
+     * Builds the {@link javax.swing.JPanel} and loads every {@link SpriteSheet}.
      */
     public LevelPanel() {
         super("/level.jpg");
@@ -54,6 +54,7 @@ public class LevelPanel extends BackgroundPanel {
         this.enemySprites = enemySheet.split(BASIC_ENEMY.getWidth(), BASIC_ENEMY.getHeight());
         try {
             this.arena = ImageLoader.load("/fields/grass/grass_template_straightpath.jpg");
+            this.wall = ImageLoader.load("/wall.png");
             this.bonus = ImageLoader.load("/coin.png");
             this.bullet = ImageLoader.load("/bullet.png");
             this.heart = ImageLoader.load("/heart.png");
@@ -106,7 +107,7 @@ public class LevelPanel extends BackgroundPanel {
         if (!this.gs.getStableList().isEmpty()) {
             this.gs.getStableList().forEach(e -> {
                 if (e instanceof Wall) {
-                    g.drawRect(e.getTopLeftPos().getIntX(), e.getTopLeftPos().getIntY(), WALL.getWidth(), WALL.getHeight());
+                    g.drawImage(this.wall, e.getTopLeftPos().getIntX(), e.getTopLeftPos().getIntY(), this);
                 }
                 if (e instanceof HealthBonus) {
                     g.drawImage(this.bonus, e.getTopLeftPos().getIntX(), e.getTopLeftPos().getIntY(), this);
@@ -122,6 +123,5 @@ public class LevelPanel extends BackgroundPanel {
                     this.getY() + LONG_SPACING, this);
         }
         this.stats.setText(this.gs.getMainChar().get().getScore().toString());
-        
     }
 }
