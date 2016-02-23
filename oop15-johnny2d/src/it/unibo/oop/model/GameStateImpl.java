@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import it.unibo.oop.controller.ControllerImpl;
 import it.unibo.oop.utilities.Direction;
 import it.unibo.oop.utilities.Position;
 
@@ -47,9 +48,10 @@ public final class GameStateImpl implements GameState {
         for (int nMonsters = 0; nMonsters < levelNumber * 10; nMonsters++) {
             final Position randomPos = this.gameArena.getPositionInside();
             System.out.println(randomPos);
-            final BasicMonster tmpMonster = Factory.EnemiesFactory.generateStillBasicEnemy(randomPos.getX(), randomPos.getY());
-            if (this.getArena().isInside(tmpMonster)){
-            	this.addMovableEntity(tmpMonster);
+            final BasicMonster tmpMonster = Factory.EnemiesFactory.generateStillBasicEnemy(randomPos.getX(),
+                    randomPos.getY());
+            if (this.getArena().isInside(tmpMonster)) {
+                this.addMovableEntity(tmpMonster);
             }
         }
     }
@@ -77,10 +79,10 @@ public final class GameStateImpl implements GameState {
         this.updateHeroPos(newDirection, isShooting);
         this.removeDeadEntities();
     }
-    
-    private void removeDeadEntities(){
-    	this.stableList.removeAll(this.stableList.stream().filter(x->x.isDead()).collect(Collectors.toList()));
-        this.movableList.removeAll(this.movableList.stream().filter(x->x.isDead()).collect(Collectors.toList()));
+
+    private void removeDeadEntities() {
+        this.stableList.removeAll(this.stableList.stream().filter(x -> x.isDead()).collect(Collectors.toList()));
+        this.movableList.removeAll(this.movableList.stream().filter(x -> x.isDead()).collect(Collectors.toList()));
     }
 
     /**
@@ -97,7 +99,7 @@ public final class GameStateImpl implements GameState {
      * @param newBullet
      */
     protected void addShoot(final Bullet newBullet) {
-    	System.out.println("Projkrnegre");
+        System.out.println("Projkrnegre");
         this.movableList.add(newBullet);
     }
 
@@ -113,7 +115,7 @@ public final class GameStateImpl implements GameState {
      */
     // May create bugs with the Score
     protected void killMainChar() {
-        this.johnnyCharacter = Optional.empty();
+     //   this.johnnyCharacter = Optional.empty();
     }
 
     /**
@@ -155,13 +157,18 @@ public final class GameStateImpl implements GameState {
     public Arena getArena() {
         return this.gameArena;
     }
+    
+    public void checkTopScore() {
+        final Score score = this.johnnyCharacter.get().getScore();
+        if (score.compareTo(ControllerImpl.getInstance().getStatFromFile()) >= 0) {
+            ControllerImpl.getInstance().putStatToFile(score);
+            System.out.println("CIAO");
+        }
+    }
 
     public boolean isGameEnded() {
-        final boolean noneEnemy = this.movableList.stream()
-                                                    .filter(e -> e instanceof Enemy)
-                                                    .collect(Collectors.toList())
-                                                    .isEmpty();
-        return noneEnemy || this.johnnyCharacter.isPresent() && 
-                            this.johnnyCharacter.get().isDead();
+        final boolean noneEnemy = this.movableList.stream().filter(e -> e instanceof Enemy).collect(Collectors.toList())
+                .isEmpty();
+        return noneEnemy || this.johnnyCharacter.isPresent() && this.johnnyCharacter.get().isDead();
     }
 }
