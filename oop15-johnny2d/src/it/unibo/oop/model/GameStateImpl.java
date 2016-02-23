@@ -156,6 +156,7 @@ public final class GameStateImpl implements GameState {
     }
 
     public boolean isGameEnded() {
-        return this.movableList.isEmpty() || this.johnnyCharacter.isPresent();
+        return this.movableList.isEmpty() || this.johnnyCharacter.isPresent() && 
+                                             this.johnnyCharacter.get().isDead();
     }
 }
