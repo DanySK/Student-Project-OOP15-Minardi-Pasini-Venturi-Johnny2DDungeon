@@ -16,17 +16,17 @@ public class MainCharacter extends MovableEntity implements Shooter {
 
     private Health currentHealth;
     private Score currentScore;
-    
+
     private Direction lastDirection;
 
     public MainCharacter(final double startingX, final double startingY, final Vector2 movementVector,
-    		final Velocity speedValue) {
+            final Velocity speedValue) {
         super(startingX, startingY, movementVector, speedValue);
         this.currentHealth = new Health();
         this.currentScore = new Score(0);
-        
+
         this.lastDirection = Direction.UP;
-        
+
     }
 
     public MainCharacter(final double startingX, final double startingY, final Vector2 startingMovement) {
@@ -47,7 +47,7 @@ public class MainCharacter extends MovableEntity implements Shooter {
         // If the main character is accelerating
         try {
             if (!(newDirection == Direction.NONE)) {
-            	lastDirection = newDirection;
+                lastDirection = newDirection;
                 newMovement = newMovement.setLength(this.getVelocity().accelerate(this.getMovement().length()));
             } else {
                 newMovement = this.getMovement().setLength(this.getVelocity().slow(this.getMovement().length()));
@@ -56,7 +56,7 @@ public class MainCharacter extends MovableEntity implements Shooter {
             this.setMovement(newMovement);
             this.move();
         } catch (CollisionHandlingException e) {
-        	System.out.println(e.getMessage());
+            System.out.println(e.getMessage());
         } finally {
             if (isShooting && !this.currentHealth.isDead()) {
                 this.shoot();
@@ -71,7 +71,7 @@ public class MainCharacter extends MovableEntity implements Shooter {
                 newPosition.getY());
         // Checks if in the next move the character is inside the Arena
         if (!this.getEnvironment().getArena().isInside(tmpJohnny)) {
-        	throw new CollisionHandlingException("Next movement not inside the arena");
+            throw new CollisionHandlingException("Next movement not inside the arena");
         }
         // Counting the number of collided walls (Usually 1)
         final long numWallCollisions = this.getEnvironment().getStableList().stream().filter(x -> x instanceof Wall)
@@ -90,7 +90,7 @@ public class MainCharacter extends MovableEntity implements Shooter {
         // If the character collides with a wall in the next move it can't move
         // there
         if (numWallCollisions > 0) {
-           	System.out.println("Entrato");
+            System.out.println("Entrato");
             throw new CollisionHandlingException("Next move collides a Wall");
         }
         // If it collides with one or more bonus it takes them and apply it;
@@ -117,29 +117,29 @@ public class MainCharacter extends MovableEntity implements Shooter {
     }
 
     @Override
-    public Direction getFaceDirection(){
-    	switch (lastDirection) {
-    	case LEFTDOWN:
-			return Direction.DOWN;
-    	case LEFTUP:
-			return Direction.UP;
-    	case RIGHTUP:
-			return Direction.UP;
-    	case RIGHTDOWN:
-			return Direction.DOWN;
-    	case NONE:
-			return Direction.UP;
+    public Direction getFaceDirection() {
+        switch (lastDirection) {
+        case LEFTDOWN:
+            return Direction.DOWN;
+        case LEFTUP:
+            return Direction.UP;
+        case RIGHTUP:
+            return Direction.UP;
+        case RIGHTDOWN:
+            return Direction.DOWN;
+        case NONE:
+            return Direction.UP;
 
-		default:
-			return lastDirection;
-		} 	
+        default:
+            return lastDirection;
+        }
     }
-    
-    public Direction getLastDirection() {
-		return lastDirection;
-	}
 
-	protected int getEntityHeight() {
+    public Direction getLastDirection() {
+        return lastDirection;
+    }
+
+    protected int getEntityHeight() {
         return MAIN_CHARACTER.getHeight();
     }
 
@@ -154,10 +154,10 @@ public class MainCharacter extends MovableEntity implements Shooter {
     public Health getHealth() {
         return this.currentHealth;
     }
-    
+
     @Override
-    public boolean isDead(){
-    	return this.currentHealth.isDead(); 
+    public boolean isDead() {
+        return this.currentHealth.isDead();
     }
 
     public void shoot() {
