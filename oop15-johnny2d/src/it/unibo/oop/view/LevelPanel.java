@@ -28,13 +28,16 @@ import it.unibo.oop.utilities.Direction;
 public class LevelPanel extends BackgroundPanel {
 
     private static final long serialVersionUID = 8057405927611227670L;
-    private static final int DEFAULT_SPACING = 10;
+    private static final int SMALL_SPACING = 10;
+    private static final int MEDIUM_SPACING = 20;
+    private static final int LONG_SPACING = 30;
 
     private final Map<Direction, BufferedImage> mainCharacterSprites;
     private final Map<Direction, BufferedImage> enemySprites;
     private BufferedImage arena;
     private BufferedImage bonus;
     private BufferedImage bullet;
+    private BufferedImage heart;
     private final JLabel stats;
     private final GameState gs;
 
@@ -53,6 +56,7 @@ public class LevelPanel extends BackgroundPanel {
             this.arena = ImageLoader.load("/fields/grass/grass_template_straightpath.jpg");
             this.bonus = ImageLoader.load("/coin.png");
             this.bullet = ImageLoader.load("/bullet.png");
+            this.heart = ImageLoader.load("/heart.png");
         } catch (IOException e) {
             System.out.println("Error loading the sprites");
         }
@@ -112,7 +116,12 @@ public class LevelPanel extends BackgroundPanel {
     }
 
     private void drawStats(final Graphics g) {
-        g.drawImage(this.mainCharacterSprites.get(DOWN), this.getX() + DEFAULT_SPACING, this.getY() + DEFAULT_SPACING, this);
+        g.drawImage(this.mainCharacterSprites.get(DOWN), this.getX() + MEDIUM_SPACING, this.getY() + MEDIUM_SPACING, this);
+        for (int i = 0; i < this.gs.getMainChar().get().getHealth().getCurrentHealth(); i++) {
+            g.drawImage(this.heart, this.getX() + MAIN_CHARACTER.getWidth() + LONG_SPACING + (this.heart.getWidth() + SMALL_SPACING) * i,
+                    this.getY() + LONG_SPACING, this);
+        }
         this.stats.setText(this.gs.getMainChar().get().getScore().toString());
+        
     }
 }
