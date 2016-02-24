@@ -72,8 +72,13 @@ public final class ControllerImpl implements Controller {
     }
     
     public synchronized void resetStatFile() {
-        this.isReset= true;
-        this.putStatToFile(new Score());
+        this.isReset = true;
+        try (ObjectOutputStream outStream = new ObjectOutputStream(
+                new BufferedOutputStream(new FileOutputStream(Settings.HIGHSCORE_FOLDER + Settings.HIGHSCORE_FILE)))) {
+            outStream.reset();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public synchronized Score getStatFromFile() {
