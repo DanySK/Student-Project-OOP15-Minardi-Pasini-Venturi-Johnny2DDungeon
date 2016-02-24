@@ -6,6 +6,7 @@ import static it.unibo.oop.utilities.Settings.SCREEN_WIDTH;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import it.unibo.oop.controller.ControllerImpl;
@@ -59,7 +60,6 @@ public final class GameStateImpl implements GameState {
                         this.getArena().getPlayableRectangle().getCenterY()));
         // Should be improved the monster generation
         this.spawnMonsters(BASE_MONSTERS);
-        this.spawnRandomHealthCollectable();
     }
 
 	private void spawnMonsters(final int number){
@@ -84,7 +84,12 @@ public final class GameStateImpl implements GameState {
 	private void spawnRandomHealthCollectable(){
 		final Position randomPos = this.getArena().getPositionInside(CharactersSettings.BONUS);
 		this.addStableEntity(new HealthBonus(randomPos.getX(), randomPos.getY()));		
-	}	
+	}
+	
+	private void spawnRandomScoreCollectable(){
+		final Position randomPos = this.getArena().getPositionInside(CharactersSettings.BONUS);
+		this.addStableEntity(new ScoreBonus(randomPos.getX(), randomPos.getY()));		
+	}
 
     private void removeDeadEntities() {
         this.stableList.removeAll(this.stableList.stream().filter(x -> x.isDead()).collect(Collectors.toList()));
@@ -108,7 +113,11 @@ public final class GameStateImpl implements GameState {
 		this.removeDeadEntities();
 		
 		if (this.updatesNumber % COLLECTIBLES_DELAY == 0){
-			this.spawnRandomHealthCollectable();
+			if (new Random().nextInt(3) == 0){
+				this.spawnRandomHealthCollectable();
+			} else {
+				this.spawnRandomScoreCollectable();
+			}
 		}
 		
 		if (this.updatesNumber % MONSTERS_DELAY == 0){
