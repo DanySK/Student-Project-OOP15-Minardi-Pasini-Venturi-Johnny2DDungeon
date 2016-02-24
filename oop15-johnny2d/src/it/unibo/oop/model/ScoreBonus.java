@@ -1,8 +1,10 @@
 package it.unibo.oop.model;
 
+import static it.unibo.oop.utilities.CharactersSettings.BONUS;
+
 import java.util.Random;
 
-public class ScoreBonus implements Collectable {
+public class ScoreBonus extends AbstractEntity implements Collectable {
 	
 	private final int scoreBonusValue;
 	
@@ -11,7 +13,8 @@ public class ScoreBonus implements Collectable {
 	private static final int HIGH_BONUS = 150;
 	
 
-	public ScoreBonus() {
+	public ScoreBonus(double startingX, double startingY) {
+		super(startingX,startingY);
 		this.scoreBonusValue = randomScoreGeneration();
 	}
 
@@ -34,6 +37,16 @@ public class ScoreBonus implements Collectable {
 	
 	private boolean isBetween(int x, int lower, int upper) {
 		  return lower <= x && x <= upper;
+	}
+
+	@Override
+	protected int getEntityHeight() {
+		return BONUS.getHeight();
+	}
+
+	@Override
+	protected int getEntityWidth() {
+		return BONUS.getWidth();
 	}
 
 }
