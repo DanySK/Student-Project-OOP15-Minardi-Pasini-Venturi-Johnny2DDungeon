@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.swing.JLabel;
 
+import it.unibo.oop.exceptions.SpritesNotSplittableException;
 import it.unibo.oop.model.BasicMonster;
 import it.unibo.oop.model.Bullet;
 import it.unibo.oop.model.GameState;
@@ -59,21 +60,21 @@ public class LevelPanel extends BackgroundPanel {
     }
     
     private void loadSprites() {
-        final SpriteSheet mainCharacterSheet = new SpriteSheet("/mainCharacter.png");
-        this.mainCharacterSprites = mainCharacterSheet.split(MAIN_CHARACTER.getWidth(), MAIN_CHARACTER.getHeight());
-        final SpriteSheet enemySheet = new SpriteSheet("/enemy.png");
-        this.enemySprites = enemySheet.split(BASIC_ENEMY.getWidth(), BASIC_ENEMY.getHeight());
-        final SpriteSheet invisibleEnemySheet = new SpriteSheet("/invisibleEnemy.png");
-        this.invisibleEnemySprites = invisibleEnemySheet.split(INVISIBLE_ENEMY.getWidth(), INVISIBLE_ENEMY.getHeight());
         try {
+            final SpriteSheet mainCharacterSheet = new SpriteSheet("/mainCharacter.png");
+            this.mainCharacterSprites = mainCharacterSheet.split(MAIN_CHARACTER.getWidth(), MAIN_CHARACTER.getHeight());
+            final SpriteSheet enemySheet = new SpriteSheet("/enemy.png");
+            this.enemySprites = enemySheet.split(BASIC_ENEMY.getWidth(), BASIC_ENEMY.getHeight());
+            final SpriteSheet invisibleEnemySheet = new SpriteSheet("/invisibleEnemy.png");
+            this.invisibleEnemySprites = invisibleEnemySheet.split(INVISIBLE_ENEMY.getWidth(), INVISIBLE_ENEMY.getHeight());
             this.arena = ImageLoader.load("/field/grass_template_straightpath.jpg");
             this.wall = ImageLoader.load("/wall.png");
             this.scoreBonus = ImageLoader.load("/coin.png");
             this.healthBonus = ImageLoader.load("/heart.png");
             this.bullet = ImageLoader.load("/bullet.png");
             this.health = ImageLoader.load("/health.png");
-        } catch (IOException e) {
-            System.out.println("Error loading the sprites");
+        } catch (IOException | SpritesNotSplittableException e) {
+            e.printStackTrace();
         }
     }
 

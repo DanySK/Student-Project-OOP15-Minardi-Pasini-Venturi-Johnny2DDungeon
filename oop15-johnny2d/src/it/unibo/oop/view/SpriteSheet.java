@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import it.unibo.oop.exceptions.SpritesNotSplittableException;
 import it.unibo.oop.utilities.Direction;
 import static it.unibo.oop.utilities.Direction.*;
 
@@ -25,7 +26,7 @@ public class SpriteSheet {
         try {
             this.sheet = ImageLoader.load(sheetName);
         } catch (IOException e) {
-            System.out.println("Error loading the sprites");
+            e.printStackTrace();
         }
     }
 
@@ -48,7 +49,7 @@ public class SpriteSheet {
      *         with all the sprites in the {@link SpriteSheet}
      *         mapped with their {@link Direction}
      */
-    public Map<Direction, BufferedImage> split(final int spritesWidth, final int spritesHeight) {
+    public Map<Direction, BufferedImage> split(final int spritesWidth, final int spritesHeight) throws SpritesNotSplittableException {
     	final Map<Direction, BufferedImage> sprites = new HashMap<>();
         final boolean isSplitted = ((this.sheet.getHeight() % spritesHeight == 0) && (this.sheet.getWidth() % spritesWidth == 0))
                 ? true : false;
@@ -73,7 +74,7 @@ public class SpriteSheet {
             	}
             }
         } else {
-            System.out.println("The sprites aren't splittable");
+            throw new SpritesNotSplittableException();
         }
         return sprites;
     }
