@@ -50,9 +50,7 @@ public final class GameStateImpl implements GameState {
 	}
 
 
-    /**
-     * Initialize the new level of the game creating enemies and the character
-     */
+    @Override
     public void initialize(final int levelNumber) {
         // This may create bugs.
         this.movableList.clear();

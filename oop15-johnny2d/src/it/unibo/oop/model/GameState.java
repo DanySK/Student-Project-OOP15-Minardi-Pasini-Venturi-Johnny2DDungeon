@@ -11,6 +11,12 @@ import it.unibo.oop.utilities.Direction;
 public interface GameState {
 
     /**
+     * @param level
+     *              of initialization.
+     */
+    void initialize(final int level);
+    
+    /**
      * Updates main character and enemies position.
      * 
      * @param newDirection
