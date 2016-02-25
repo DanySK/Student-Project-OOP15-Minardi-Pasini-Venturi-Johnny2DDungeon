@@ -11,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.util.Optional;
 import java.util.Random;
 
+import it.unibo.oop.model.GameState;
 import it.unibo.oop.model.GameStateImpl;
 import it.unibo.oop.model.Score;
 import it.unibo.oop.utilities.Settings;
@@ -30,6 +31,7 @@ public final class ControllerImpl implements Controller {
     private volatile boolean isReset;
     private final Random rdm;
     private final ViewsManager<LevelInterface, AppState> viewsMan = ViewsManagerImpl.getInstance();
+    private final GameState gameState = GameStateImpl.getInstance();
     
     private ControllerImpl() {
         this.createStatFile();
@@ -50,7 +52,7 @@ public final class ControllerImpl implements Controller {
     @Override
     public void start() { // launcher -> play / pause -> replay
         final int rmdVal = this.rdm.nextInt(LEVELS);
-        GameStateImpl.getInstance().initialize(rmdVal);
+        this.gameState.initialize(rmdVal);
         this.viewsMan.getView().initialize(rmdVal);
         this.play();
     }
@@ -61,7 +63,7 @@ public final class ControllerImpl implements Controller {
         ActionKeysManager.getInstance().reset();
         this.isReset = false;
         this.record = false;
-        ViewsManagerImpl.getInstance().hideView();
+        this.viewsMan.hideView();
         if (!this.gLAgent.isPresent()) {
             this.gLAgent = Optional.ofNullable(new GameLoopAgent());
             new Thread(this.gLAgent.get()).start();
