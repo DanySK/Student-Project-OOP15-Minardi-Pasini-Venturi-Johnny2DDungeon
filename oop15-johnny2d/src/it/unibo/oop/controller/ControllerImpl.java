@@ -9,23 +9,28 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Optional;
+import java.util.Random;
 
 import it.unibo.oop.model.GameStateImpl;
 import it.unibo.oop.model.Score;
 import it.unibo.oop.utilities.Settings;
+import it.unibo.oop.view.ViewsManagerImpl;
 
 /**
  * Class implementing the Controller of the MVC model.
  */
 public final class ControllerImpl implements Controller {
 
+    private static final int LEVELS = 10;
     private static Optional<ControllerImpl> singleton = Optional.empty();
     private Optional<AgentInterface> gLAgent = Optional.empty();
     private volatile boolean record;
     private volatile boolean isReset;
-
+    private final Random rdm;
+    
     private ControllerImpl() {
         this.createStatFile();
+        this.rdm = new Random();
         ViewsManagerImpl.getInstance().showView(AppState.LAUNCHING);
     }
 
@@ -41,7 +46,8 @@ public final class ControllerImpl implements Controller {
 
     @Override
     public void start() { // launcher -> play / pause -> replay
-        GameStateImpl.getInstance().initialize(1);
+        final int rmdVal = this.rdm.nextInt(LEVELS);
+        GameStateImpl.getInstance().initialize(rmdVal);
         this.play();
     }
 
