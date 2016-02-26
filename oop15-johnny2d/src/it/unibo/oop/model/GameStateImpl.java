@@ -14,8 +14,8 @@ import it.unibo.oop.utilities.Position;
 
 public final class GameStateImpl implements GameState {
 
-    private static final int BASIC_DEFAULT = 15;
-    private static final int BASIC_SCALE = 3;
+    private static final int BASIC_DEFAULT = 17;
+    private static final int BASIC_SCALE = 4;
 
     private static final int INVISIBLE_DEFAULT = 3;
 
