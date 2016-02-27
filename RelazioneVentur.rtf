@@ -1,4 +1,4 @@
-{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1040{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset2 Symbol;}}
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1040{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fswiss\fprq2\fcharset0 Calibri;}{\f2\fnil Calibri;}{\f3\fnil\fcharset2 Symbol;}}
 {\*\generator Riched20 10.0.10586}\viewkind4\uc1 
 \pard\sa200\sl276\slmult1\qj\f0\fs52\lang16 PER MINO:\par
 \fs22 Per facilitare la gestione del record da parte delle principali componenti del pattern mvc, si \'e8 deciso di utilizzare una classe ad hoc "RecordImpl" che, tramite implementazione del pattern singleton, pu\'f2 essere acceduta in totale libert\'e0 senza dalle suddette parti. Tale classe wrappa uno Score serializzabile che potr\'e0 essere salvato su file dal Controller, Stampato a schermo dalla View e aggiornato Model.\fs52\par
@@ -16157,7 +16157,7 @@ cccc0099cc99006699000066cc66009999660066cc99003399330033663300ccffcc00cccc9900
 }\par
 
 \pard\sa200\sl276\slmult1\qj\fs22 Al suo interno, il Controller \'e8 formato da alcune sottoclassi atte a gestire le varie fasi di vita dell'applicazione. Mentre ControllerImpl gestisce le inizializzationi varie, Il vero cuore del Controller, il cosidetto "game loop", \'e8 implementato nella classe GameLoopAgent. Questa ha come scopo quello di alternare in modo continuo la scansione degli input dalla View con le notifiche al Model e il conseguente ri-aggiornamento della View. Per semplificare la gestione delle notifiche alla view, non ch\'e8 il susseguirsi delle diverse fasi dell'applicazione, si \'e8 utilizzato un Observer apposito che gestisse il passagio da uno stato (AppSate) ad un altro dell'applicazione. Tramite questo \'e8 possibile comunicare sia al Controller che alla View in quale stato si dovr\'e0 migrare, e, relativamente a quest'ultima, quale menu dovr\'e0 essere mostrato. \par
-Come appena detto, e come si pu\'f2 notare nell'UML, \'e8 stato quindi utilizzato il pattern Observer per notificare il Controller dello stato in cui passare (che viene modificato in risposta ad eventi della view) e un pattern Strategy per il metodo doAction appartenente al precedente pattern, che, accettando come argomento un Consumer<O> consente di poter riutilizzare il pattern Observer in modo simile in altri parti del progetto.\par
+Come appena detto, e come si pu\'f2 notare nell'UML, \'e8 stato quindi utilizzato il pattern Observer per notificare il Controller dello stato in cui passare (che viene modificato in risposta ad eventi della view) e un pattern Strategy per il metodo doAction dell'interfaccia ESource<O>, che accettando come argomento un Consumer<O> consente di poter utilizzare pattern observer analogi, utilizzati in altri parti del progetto, e che differiscono solo per il tipo/numero degli argomenti che richiedono. In sostanza \'e8 una generalizzazione del metodo \i notifyObservers(Object) \i0 visto a lezione.\par
 
 \pard\sa200\sl240\slmult1\qj\fs36{\pict{\*\picprop}\wmetafile8\picwgoal8640\pichgoal3540 
 0100090000037866010000004f66010000000400000003010800050000000b0200000000050000
@@ -21537,7 +21537,7 @@ View (Giacomo Pasini, Paolo Venturi)\par
 \fs36 Interazioni tra Controller e View (Paolo Venturi)\par
 \fs22 Per quanto riguarda le relazioni con la view e la gestione di questa, il controller ha a che fare con due tipologie di eventi: gli eventi da tastiera, generati durante il gaming vero e proprio, e gli eventi dai menu di gioco.\par
 
-\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li360\sa200\sl276\slmult1\qj Eventi da tastiera:\par
+\pard{\pntext\f3\'B7\tab}{\*\pn\pnlvlblt\pnf3\pnindent0{\pntxtb\'B7}}\fi-360\li360\sa200\sl276\slmult1\qj Eventi da tastiera:\par
 
 \pard\sa200\sl240\slmult1\qj{\pict{\*\picprop}\wmetafile8\picw12118\pich9657\picwgoal6870\pichgoal5475 
 010009000003384a010000000f4a010000000400000003010800050000000b0200000000050000
@@ -25878,9 +25878,9 @@ cc990099cccc003366330066cc6600ccffcc0099996600cccc990099cc66003399000066990000
 ff030000000000
 }\par
 
-\pard\sa200\sl276\slmult1\qj A questa tipoligia di eventi corrispondono principalmente le informazioni da passare al model che determinano lo stato del personaggio (come movimento e azione), ed, eccezionalmente, comandi di "passaggio di stato" p.e. lo stato di pausa dell'applicazione. Per entrambi casi, comunque, come si pu\'f2 vedere nell'uml di cui sopra, la gestione avviene tramite un accesso diretto da parte del gameloop alla view per ottenere le suddette informazione. Una volta ottenute, se sono informazioni esclusive per il mode allora vendono direttamente passate a lui, viceversa, se sono informazioni relative allo stato del gioco (p.e. game-pause) queste vengono inviate all'observer cui spetter\'e0 il compito di notificare del cambiamento di stato i relativi clienti. Da notare come lo stesso observer sia utilizzato  comodamente anche per il passaggio allo stato di "game over".\par
+\pard\sa200\sl276\slmult1\qj A questa tipoligia di eventi corrispondono principalmente le informazioni da passare al model che determinano lo stato del personaggio (come movimento e azione), ed, eccezionalmente, comandi di "passaggio di stato" p.e. lo stato di pausa dell'applicazione. Per entrambi i casi, comunque, come si pu\'f2 vedere nell'uml di cui sopra, la gestione avviene tramite un accesso diretto da parte del gameloop alla view per ottenere le suddette informazione. Una volta ottenute, se sono informazioni esclusive per il mode allora vendono direttamente passate a lui, viceversa, se sono informazioni relative allo stato del gioco (p.e. game-pause) queste vengono inviate all'observer cui spetter\'e0 il compito di notificare del cambiamento di stato i relativi clienti. Da notare come lo stesso observer sia utilizzato  comodamente anche per il passaggio allo stato di "game over".\par
 
-\pard{\pntext\f1\'B7\tab}{\*\pn\pnlvlblt\pnf1\pnindent0{\pntxtb\'B7}}\fi-360\li360\sa200\sl276\slmult1\qj Eventi da menu:\par
+\pard{\pntext\f3\'B7\tab}{\*\pn\pnlvlblt\pnf3\pnindent0{\pntxtb\'B7}}\fi-360\li360\sa200\sl276\slmult1\qj Eventi da menu:\par
 
 \pard\sa200\sl240\slmult1\qc{\pict{\*\picprop}\wmetafile8\picw15531\pich13123\picwgoal8640\pichgoal7305 
 010009000003ea3b02000000c13b020000000400000003010800050000000b0200000000050000
@@ -33395,6 +33395,24 @@ ffff030000000000
 }\par
 
 \pard\sa200\sl276\slmult1\qj Per ci\'f2 che concerte questo secondo tipo di eventi, che non interessano direttamente il game loop, la view (o meglio i menu di cui si compone la view e generati dalla relativa factory) accedono prima all'observer, conseguentemente, a seconda dell'evento, si ha un passaggio di stato relativo alla sola view (cambio di menu), oppure un cambio di stato che coinvolge anche il Controller (p.e. i comandi play, replay). \par
-Come da uml, un'ultima tipologia di interazione che si pu\'f2 avere \'e8 tra la entry class del Controller e la View. Questa interazione avviene esclusivamente nella fasi di inizializzazione-reinizializzazione della view e delle fasi di gioco, realizzando di fatto una divisione delle responsabilit\'e0 di gestione della View da parte delle due principali classi che ne regolano il controllo. \par
+Come da uml, un'ultima tipologia di interazione che si pu\'f2 avere \'e8 tra la entry class del Controller e la View. Questa interazione avviene esclusivamente nella fasi di re/inizializzazione della view e delle fasi di gioco, realizzando di fatto una divisione delle responsabilit\'e0 di gestione della View da parte delle due principali classi che ne regolano il controllo (ControllerImpl e relativo Agent).\par
+\par
+\par
+\fs36 Metodologia di lavoro (parte Paolo Venturi)\par
+\f1\fs22\lang1040 La parte di principale interesse \'e8 stata quella relativa al Controller e alla gestione degli eventi tra questi e la view. Complessivamente sono state dedicate tale parte circa 4/5 ore al giorno di progettazione, studio, e sviluppo per un totale di 3 settimane. Purtroppo a causa di fraintendimenti ed errori in fase di progettazione e ripartizione dei ruoli ha avuto luogo un sovradimensionamento del mio ruolo che ha portato nell'occuparmi di una bona percentuale della view. Ci\'f2 nonostate abiamo fatto uso massiccio del DVCS e ci siamo coordinati al fine di riuscire ad ottenere una demo funzionante entro i termini previsti. Per ci\'f2 che concerne l'integrazione delle parti, si \'e8 deciso in comune quali metodi sarebbero stati i ponti tra le varie parti del progetto. Come da mail, la mia parte ha interessato progettazione e sviluppo di:\par
+
+\pard{\pntext\f3\'B7\tab}{\*\pn\pnlvlblt\pnf3\pnindent0{\pntxtb\'B7}}\fi-360\li720\sa200\sl276\slmult1\qj Controller;\f0\fs36\lang16\par
+{\pntext\f3\'B7\tab}\f1\fs22\lang1040  organizzazione e gestione view e dei menu, degli eventi (Keyboard) e dell' interazione tra Controller e View\f0\fs36\lang16\par
+
+\pard\sa200\sl276\slmult1\qj\f1\fs22\lang1040 Ho inoltre contribuito in piccola parte nello sviluppo di alcuni elementi del Model, relativi alla gestione del Record del giocatore.\f0\fs36\lang16\par
+
+\pard\sa200\sl276\slmult1\qj Capitolo 4\par
+
+\pard\widctlpar\sa160\sl252\slmult1 Commenti \f2\u-1279?nali\par
+\f1\fs22\lang1040 Paolo Venturi: \par
+Sono particolarmente soddisfatto del risultato ottenuto, anche se avrei preferito una pi\'f9 equa ripartizione dei ruoli. Ci\'f2 nonostatne ho avuto la possibilit\'e0 di cimentarmi in aspetti di progettazione, sviluppo e studio di alcuni degli elementi centrali in un applicazione del genere e che mi hanno sicuramente interessato e soddisfatto. La buona collaborazione e cooperazione col resto del team ha sicuramente aiutato  nello sviluppo e nel raggiungimento degli obiettivi che ci eravamo prefissati. La principale speranza per il futuro \'e8 un miglioramento nella stesura del codice e nella progettazione. Spero, infatti, che il codice prodotto e la progettazione delle parti siano soddisfacenti e relativamente a questo avrei preferito una migliore esperienza. \par
+Sarebbe bello, per il futuro, utilizzare questo progetto come punto di riferimento per lo sviluppo di ulteriori applicazioni di genere analogo o migliorare direttamente questo. Ovviamente, essendo solo all'inizio, sono ansioso di mettermi alla prova e sperimentare anche ulteriori campi dell'informatica.\par
+
+\pard\sa200\sl276\slmult1\qj\f0\lang16\par
 }
  
