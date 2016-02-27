@@ -16,15 +16,17 @@ public final class GameStateImpl implements GameState {
 
     private static final int BASIC_DEFAULT = 17;
     private static final int BASIC_SCALE = 4;
-
+    private static final int MONSTERS_DELAY = 130;
+    
     private static final int INVISIBLE_DEFAULT = 3;
 
     private int monstersCap = 50;
 
     private static final int MAX_COLLECTIBLES = 4;
-
     private static final int COLLECTIBLES_DELAY = 120;
-    private static final int MONSTERS_DELAY = 130;
+    
+    private static final int BASIC_DISTANCE = 400;
+    private static final int INVISIBLE_DISTANCE = 500;
 
     private int randomCollectiblesDelay = COLLECTIBLES_DELAY;
     private int randomMonstersDelay = MONSTERS_DELAY;
@@ -65,7 +67,7 @@ public final class GameStateImpl implements GameState {
         this.johnnyCharacter = Optional.ofNullable(
                 Factory.MainCharacterFactory.generateCentredCharacter(this.getArena().getPlayableRectangle()));
         this.spawnBasicMonsters(BASIC_DEFAULT);
-//        this.spawnInvisibleMonsters(INVISIBLE_DEFAULT);
+        this.spawnInvisibleMonsters(INVISIBLE_DEFAULT);
     }
     /**
      * A method that creates a defined number of {@link BasicMonster} in N free random position
@@ -84,7 +86,7 @@ public final class GameStateImpl implements GameState {
                 monsterConfilicts = this.movableList.stream().filter(x -> x.intersecate(finalMonster))
                         .filter(x -> x instanceof AbstractEnemy).count();
                 distanceCondition = Position.pointsDistance(this.getMainChar().get().getPosition(),
-                        tmpMonster.getPosition()) > 400 ? false : true;
+                        tmpMonster.getPosition()) > BASIC_DISTANCE ? false : true;
             } while (monsterConfilicts != 0 || distanceCondition);
             this.addMovableEntity(tmpMonster);
         }
@@ -107,7 +109,7 @@ public final class GameStateImpl implements GameState {
                 monsterConfilicts = this.movableList.stream().filter(x -> x.intersecate(finalMonster))
                         .filter(x -> x instanceof AbstractEnemy).count();
                 distanceCondition = Position.pointsDistance(this.getMainChar().get().getPosition(),
-                        tmpMonster.getPosition()) > 700 ? false : true;
+                        tmpMonster.getPosition()) > INVISIBLE_DISTANCE ? false : true;
             } while (monsterConfilicts != 0 || distanceCondition);
             this.addMovableEntity(tmpMonster);
         }
