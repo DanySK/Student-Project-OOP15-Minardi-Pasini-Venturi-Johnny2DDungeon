@@ -76,6 +76,7 @@ public final class MusicPlayerImpl implements MusicPlayer {
     @Override
     public void playLoop(final String musicName) {
         if (this.musicOn) {
+            this.getMusic(musicName).setFramePosition(0);
             this.getMusic(musicName).loop(Clip.LOOP_CONTINUOUSLY);
         }
     }
