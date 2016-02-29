@@ -24,7 +24,7 @@ public class PauseMenu extends MenuPanel {
         this.setIcon("/pause.png");
 
         /* SCORE LABEL */
-        final JLabel record = new JLabel("Current Record-" + RecordImpl.getInstance().getValue());
+        final JLabel record = new JLabel("Current Record " + RecordImpl.getInstance().getValue());
         this.addComponents(record);
 
         /* BUTTONS CREATION */

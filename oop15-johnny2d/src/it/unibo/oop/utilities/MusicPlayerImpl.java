@@ -1,5 +1,6 @@
 package it.unibo.oop.utilities;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +34,8 @@ public final class MusicPlayerImpl implements MusicPlayer {
 
     private Clip loadMusic(final String path) {
         Clip clip = null;
-        try (final AudioInputStream ais = AudioSystem.getAudioInputStream(this.getClass().getResourceAsStream(path))) {
+        try (final AudioInputStream ais = AudioSystem
+                .getAudioInputStream(new BufferedInputStream(this.getClass().getResourceAsStream(path)))) {
             clip = AudioSystem.getClip();
             clip.open(ais);
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
